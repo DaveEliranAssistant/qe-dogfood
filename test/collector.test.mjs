@@ -1,0 +1,6 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+const title='INTENTIONAL FLAKE — seeded preview timing race';
+function report(failureTitle){return {suites:[{specs:['home','REST','validation','axe',title].map(name=>({title:name,tests:[{results:[{status:name===failureTitle?'failed':'passed'}]}]}))}]};}
+test('collector accepts real intentional failure and clean executions only',async()=>{const {validateRun}=await import('../scripts/validate-run.mjs');assert.deepEqual(validateRun(report(title),1),[title]);assert.deepEqual(validateRun(report(),0),[]);});
+test('collector fails on non-intentional errors, missing cases, skipped tests and inconsistent exits',async()=>{const {validateRun}=await import('../scripts/validate-run.mjs');assert.throws(()=>validateRun(report('REST'),1));assert.throws(()=>validateRun(report(title),0));assert.throws(()=>validateRun(report(),2));const retry=report();retry.suites[0].specs[0].tests[0].results.push({status:'passed'});assert.throws(()=>validateRun(retry,0));const missing=report();missing.suites[0].specs.pop();assert.throws(()=>validateRun(missing,0));const skipped=report();skipped.suites[0].specs[0].tests[0].results[0].status='skipped';assert.throws(()=>validateRun(skipped,0));});

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "qe-dogfood.baseline/1",
+  "purpose": "One-time actual initial Chromium/axe scan; reviewed synthetic defects accepted, not regenerated during PR checks",
+  "baselineSha256": "93238fc58270938ff69b628d4d51c828dfdaf55eb50b85465337a7a9fba2cb5d",
+  "axeVersion": "4.14.0",
+  "urls": [
+    "http://127.0.0.1:4319/",
+    "http://127.0.0.1:4319/items",
+    "http://127.0.0.1:4319/accessibility"
+  ],
+  "knownViolations": [
+    {
+      "id": "button-name",
+      "nodes": 1
+    },
+    {
+      "id": "color-contrast",
+      "nodes": 1
+    },
+    {
+      "id": "image-alt",
+      "nodes": 1
+    }
+  ],
+  "sourceFiles": {
+    "public/index.html": "1acc99a4bdc715141e843c3eb77e6918602a87d8ffb974c9e26f96286ca4e07f",
+    "public/items.html": "c85d78dbed2213b412a4062c37362627db2b9a5908312fbe5d1ed34331485b13",
+    "public/accessibility.html": "c299fe4b2e8f682d48a3474fcdd99e7038bc9bf56f5dac4ebde179b2bd32df05",
+    "public/style.css": "4ccddce0bb7dad6b7c71a88db5a7dd4beaa6958edd0a1aefd786cc49e30690c1",
+    "public/timing.js": "9e5dd603441449129b2e14a9f3acb9194e50ceb715a01f8db1d11bfb18a5ffbd",
+    "public/item.svg": "56eb3bac92e3fbb9b5ef94e3eb437af497c973592d54fdbb2f1663a05eb2223a",
+    "tests/dogfood.spec.ts": "3412cd997888f20a8db7f63370ced9598e7587051caf879de21484156d72417f",
+    "src/app.ts": "7dff920b78fb3d4a4209c6705c879378d15f8364c69d2cd941c173e2ec9b5e48",
+    "openapi.json": "12e3087d5e6d906ae0378be46fda5b14d875f32f235671a42927016b86127791"
+  }
+}

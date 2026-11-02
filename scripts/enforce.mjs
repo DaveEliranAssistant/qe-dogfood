@@ -1,0 +1,5 @@
+import {readFileSync} from 'node:fs';
+const outcomes=['FLAKELENS_OUTCOME','A11YGATE_OUTCOME','SPECGATE_OUTCOME'].map(k=>process.env[k]);
+let success=outcomes.every(v=>v==='success');
+try{const flake=JSON.parse(readFileSync('product-reports/flakelens.json'));const a11y=JSON.parse(readFileSync('product-reports/a11ygate.json'));const spec=JSON.parse(readFileSync('product-reports/specgate.json'));success=success&&flake.product==='flakelens'&&flake.summary.runs===5&&flake.summary.tests===5&&flake.summary.flaky===1&&flake.summary.stable===4&&flake.summary.regressions===0&&a11y.verdict==='PASS'&&spec.comparisonPerformed===true&&spec.cli.exitCode===0;}catch{success=false;}
+if(!success){console.error('One or more product gates failed or evidence is incomplete. Reports remain available; no findings or errors were suppressed.');process.exitCode=1;}else console.log('All product executions succeeded; A11yGate and removal-only SpecGate passed. Known a11y defects and intentional flakiness remain reported.');

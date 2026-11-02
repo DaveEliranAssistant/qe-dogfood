@@ -1,0 +1,125 @@
+name: QE product dogfood
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      base_ref:
+        description: Trusted base ref for removal/baseline comparison
+        required: true
+        default: main
+permissions:
+  contents: read
+concurrency:
+  group: qe-dogfood-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  collect:
+    name: Collect five real suite runs
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts
+      - run: npm test && npm run typecheck
+      - run: ./node_modules/.bin/playwright install --with-deps chromium
+      - name: Five runs; only the named intentional race may fail
+        run: npm run collect
+        env:
+          DOGFOOD_SEED: qe-dogfood-v1
+      - name: Preserve exact PR-head contract
+        run: node -e "require('fs').copyFileSync('openapi.json','reports/openapi-head.json')"
+      - name: Upload every real XML, JSON scan and run result
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: qe-raw-evidence
+          path: reports/
+          if-no-files-found: error
+          retention-days: 14
+  products:
+    name: Product reports
+    needs: collect
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Trusted baseline and product tooling from the base revision
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.base.sha || inputs.base_ref || 'main' }}
+          path: trusted
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - name: Immutable FlakeLens CLI contribution (PR 4)
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: DaveEliranAssistant/flakelens
+          ref: ec0969e0e2b3171f664cd351c60979b5c227fcbf
+          path: flakelens
+          persist-credentials: false
+      - name: Install FlakeLens locked dependencies without lifecycle scripts
+        working-directory: flakelens
+        run: npm ci --ignore-scripts
+      - name: Download actual test evidence
+        id: evidence
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: qe-raw-evidence
+          path: evidence
+      - name: Create product report directory
+        run: mkdir product-reports
+      - name: FlakeLens shared parser, scorer and report
+        id: flakelens
+        working-directory: flakelens
+        run: node --import tsx scripts/cli.ts --json ../product-reports/flakelens.json --markdown ../product-reports/flakelens.md ../evidence/junit-*.xml
+      - name: A11yGate new, fixed, still-open findings and PR comment
+        id: a11y
+        if: ${{ !cancelled() && steps.evidence.outcome == 'success' }}
+        continue-on-error: true
+        uses: DaveEliranAssistant/a11ygate-action@v1
+        with:
+          current: evidence/axe-results.json
+          baseline: trusted/a11y-baseline.json
+          threshold: minor
+          markdown: product-reports/a11ygate.md
+          json: product-reports/a11ygate.json
+          comment: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+      - name: SpecGate exact path and operation removals only
+        id: specgate
+        if: ${{ !cancelled() && steps.evidence.outcome == 'success' }}
+        continue-on-error: true
+        run: node trusted/vendor/specgate/cli.mjs --base trusted/openapi.json --head evidence/openapi-head.json --json product-reports/specgate.json --markdown product-reports/specgate.md
+      - name: Append reports and provenance to the job summary
+        if: always()
+        run: node trusted/scripts/summarize.mjs
+        env:
+          FLAKELENS_OUTCOME: ${{ steps.flakelens.outcome }}
+          A11YGATE_OUTCOME: ${{ steps.a11y.outcome }}
+          SPECGATE_OUTCOME: ${{ steps.specgate.outcome }}
+      - name: Upload product reports even when gates fail
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: qe-product-reports
+          path: product-reports/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Enforce actual product gate outcomes (no false green)
+        if: always()
+        run: node trusted/scripts/enforce.mjs
+        env:
+          FLAKELENS_OUTCOME: ${{ steps.flakelens.outcome }}
+          A11YGATE_OUTCOME: ${{ steps.a11y.outcome }}
+          SPECGATE_OUTCOME: ${{ steps.specgate.outcome }}

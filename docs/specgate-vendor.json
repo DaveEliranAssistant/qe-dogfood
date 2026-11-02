@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "qe-dogfood.vendor/1",
+  "sourceRepository": "https://github.com/DaveEliranAssistant/specgate",
+  "sourceCommit": "cd78d34b50c5e189d321f2193b1318b2919cd15c",
+  "sourcePR": "https://github.com/DaveEliranAssistant/specgate/pull/1",
+  "scope": "Owner-approved MIT bounded OpenAPI engine/wrapper only; no code-first scanner",
+  "files": [
+    {
+      "path": "vendor/specgate/cli.mjs",
+      "sha256": "d4a3e48591a4fe1306fec7929bd580f594f509ea57ce4082ee92b5bb5075be3e"
+    },
+    {
+      "path": "vendor/specgate/specgate-diff.mjs",
+      "sha256": "ef87326988d381c15997bcb9e6bf48fc47c66cd46526f65c282e4eedea1e9c69"
+    },
+    {
+      "path": "vendor/specgate/LICENSE",
+      "sha256": "5dd539caae89664de221f0c20bde8e6208cdb1f2ba68e7e1fef8bde3b30e7bc1"
+    },
+    {
+      "path": "vendor/specgate/README.md",
+      "sha256": "3198771de852499ba4a0a093b85e1deb98e503b9e49c205ea92c701c821a810f"
+    },
+    {
+      "path": "vendor/specgate/upstream.json",
+      "sha256": "f57976b36733b1c9c81262dc25cbbb4cb49c4f3baf5da0241b37ab669495ef5e"
+    }
+  ]
+}

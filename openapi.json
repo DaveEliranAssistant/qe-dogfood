@@ -1,0 +1,17 @@
+{
+  "openapi":"3.0.3",
+  "info":{"title":"QE Dogfood Items API","version":"1.0.0","description":"Synthetic loopback-only demo. SpecGate checks removals only."},
+  "paths":{
+    "/api/health":{"get":{"operationId":"getHealth","responses":{"200":{"description":"Ready"}}}},
+    "/api/items":{
+      "get":{"operationId":"listItems","responses":{"200":{"description":"Items","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/Item"}}}}}}},
+      "post":{"operationId":"createItem","requestBody":{"required":true,"content":{"application/json":{"schema":{"type":"object","required":["name"],"properties":{"name":{"type":"string","minLength":1,"maxLength":100}}}}}},"responses":{"201":{"description":"Created"},"400":{"description":"Invalid input"}}}
+    },
+    "/api/items/{id}":{
+      "parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"string"}}],
+      "get":{"operationId":"getItem","responses":{"200":{"description":"Item","content":{"application/json":{"schema":{"$ref":"#/components/schemas/Item"}}}} ,"404":{"description":"Not found"}}},
+      "delete":{"operationId":"deleteItem","responses":{"204":{"description":"Deleted"},"404":{"description":"Not found"}}}
+    }
+  },
+  "components":{"schemas":{"Item":{"type":"object","required":["id","name"],"properties":{"id":{"type":"string"},"name":{"type":"string"}}}}}
+}
