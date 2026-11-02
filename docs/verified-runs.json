@@ -1,0 +1,120 @@
+[
+  {
+    "demo": "A",
+    "run": {
+      "conclusion": "failure",
+      "headSha": "298f483d8c7bc3ac65307359c54754bf498add2a",
+      "status": "completed",
+      "url": "https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/41529130460"
+    },
+    "flakelens": {
+      "runs": 5,
+      "tests": 5,
+      "flaky": 1,
+      "regressions": 0,
+      "stable": 4,
+      "failures": 2,
+      "rootCauses": 1,
+      "summary": "2 failures = 1 root cause",
+      "flakyFailures": 2
+    },
+    "a11ygate": {
+      "verdict": "FAIL",
+      "counts": {
+        "new": 1,
+        "fixed": 0,
+        "stillOpen": 3
+      }
+    },
+    "specgate": {
+      "summary": {
+        "pathRemoved": 1,
+        "operationRemoved": 0,
+        "total": 1
+      },
+      "gate": "FAIL_REMOVALS"
+    },
+    "rawXmlCount": 5,
+    "artifactDigests": [
+      {
+        "id": 13181481419,
+        "name": "qe-product-reports",
+        "expired": false,
+        "digest": "sha256:7a50d50ee25a92c7c20a0ae0d023fd421b26fed5168604064851e5ba0ffe8296"
+      },
+      {
+        "id": 13180986806,
+        "name": "qe-raw-evidence",
+        "expired": false,
+        "digest": "sha256:bb7a9b36a81b13ba610a03c1497bed8e73eddc119da2e1e159aaa8599b6417e0"
+      }
+    ],
+    "reportHashes": {
+      "a11ygate.json": "f9f961c458f74094df4358e93c94a86e18f8de032fd15a770cbe71e3826b8209",
+      "a11ygate.md": "0844bfdedef3b6e55d5364650c4e7169af0ed42a30f307e515d59cee3239225a",
+      "flakelens.json": "5981d9a139e0c949b157bd5337cc2cb6cc89c38d6453cb87628e4d2c41674d69",
+      "flakelens.md": "4755cdd22061b906bff9716b4357d7dfc80e276f8e87eeb8719acc6e01a202e7",
+      "specgate.json": "235397859514d7f9735a2f0379516a73a6338f40a81e10e93a3df0ade0473bf5",
+      "specgate.md": "d95b794cfcb3d0d73366609c6e509cbb76347ff9020a56821239c401ab43a706"
+    }
+  },
+  {
+    "demo": "B",
+    "run": {
+      "conclusion": "success",
+      "headSha": "481a492ac93f1279e6ffcac49cc839bc3c3e6d6a",
+      "status": "completed",
+      "url": "https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/41529136093"
+    },
+    "flakelens": {
+      "runs": 5,
+      "tests": 5,
+      "flaky": 1,
+      "regressions": 0,
+      "stable": 4,
+      "failures": 2,
+      "rootCauses": 1,
+      "summary": "2 failures = 1 root cause",
+      "flakyFailures": 2
+    },
+    "a11ygate": {
+      "verdict": "PASS",
+      "counts": {
+        "new": 0,
+        "fixed": 0,
+        "stillOpen": 3
+      }
+    },
+    "specgate": {
+      "summary": {
+        "pathRemoved": 0,
+        "operationRemoved": 0,
+        "total": 0
+      },
+      "gate": "PASS_REMOVAL_RULES_ONLY"
+    },
+    "rawXmlCount": 5,
+    "artifactDigests": [
+      {
+        "id": 13180678182,
+        "name": "qe-product-reports",
+        "expired": false,
+        "digest": "sha256:82097f64e71f37954aaaadbb5e6d7ac08423e2a2a855d5a5b1ed1ebb9b05f537"
+      },
+      {
+        "id": 13180637622,
+        "name": "qe-raw-evidence",
+        "expired": false,
+        "digest": "sha256:5c9bf85ccc398e05df447c69c50070b0bf459e4e84e85e591e2e9e3ef331eb25"
+      }
+    ],
+    "reportHashes": {
+      "a11ygate.json": "5301d42e687e701de7bca5981ba43a2702474f6713dbd233e1a23883272f69d9",
+      "a11ygate.md": "4dbc0131bcd5d2e54b80b0b540f6754070f28ed63f08206425dd9e68adcbf21c",
+      "flakelens.json": "015f238f603f7ca91940f87747d94e03ca41ba0bae3c5c39007afceafe65b6cd",
+      "flakelens.md": "4755cdd22061b906bff9716b4357d7dfc80e276f8e87eeb8719acc6e01a202e7",
+      "specgate.json": "01bcf16680538e707706221472668fd47a76dc443a8a2446984010a0c2acf37c",
+      "specgate.md": "c761c4cf7c070bc8be11cf6a756065d2577d63da8e7badeb9ea69f3aeba85518"
+    }
+  }
+]
