@@ -1,0 +1,14 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import { verifyA11yCase } from '../scripts/verify-a11y-coverage.mjs';
+import * as guard from '../scripts/verify-a11y-coverage.mjs';
+import {readFileSync} from 'node:fs';
+const native={tool:'a11ygate',schemaVersion:2,synthetic:true,verdict:'INCOMPLETE',counts:{new:0,fixed:0,stillOpen:0},findings:{new:[],fixed:[],stillOpen:[],unassessed:[{fingerprint:'a'},{fingerprint:'b'},{fingerprint:'c'}]},coverage:{status:'incomplete',unassessedFindings:3,issues:[{code:'missing-page',page:'/accessibility',detail:'Missing'}],unassessedScope:['Manual scope unassessed']},manualChecks:[]};
+const shared={schemaVersion:1,product:'A11yGate',verdict:'error',metrics:Object.entries({new:0,fixed:0,'still-open':0,unassessed:3,coverage:'incomplete','coverage-issues':1,'unassessed-scope':1,'manual-checks':0}).map(([label,value])=>({label,value})),findings:[],headline:'coverage incomplete; 3 unassessed'};
+test('independent oracle accepts explicitly incomplete coverage, never a false fixed/PASS result',()=>assert.equal(verifyA11yCase('missing-page',native,shared,2),true));
+test('guard rejects false fixes, missing failures, wrong exit/shared verdict, absent reasons and lost debt scope',()=>{
+ for(const mutate of [n=>n.counts.fixed=3,n=>n.verdict='PASS',n=>n.findings.unassessed=[],n=>n.coverage.issues=[],n=>n.coverage.unassessedScope=[]]){const n=structuredClone(native);mutate(n);assert.throws(()=>verifyA11yCase('missing-page',n,shared,2));}
+ assert.throws(()=>verifyA11yCase('missing-page',native,{...shared,verdict:'pass'},2));assert.throws(()=>verifyA11yCase('missing-page',native,shared,0));
+});
+test('guard rejects wrong shared debt/coverage metrics rather than checking only the verdict',()=>{const wrong=structuredClone(shared);wrong.metrics.find(m=>m.label==='unassessed').value=0;assert.throws(()=>verifyA11yCase('missing-page',native,wrong,2));});
+test('baseline acceptance is checked by exact independently declared fingerprint/rule/selector, not just counts',()=>{assert.equal(typeof guard.verifyBaselineAcceptance,'function');const entries=JSON.parse(readFileSync('fixtures/a11y-coverage/expected.json')).baselineAcceptance;const review={approval:'review-required',acceptedFindings:entries,newlyAccepted:[entries.find(x=>x.ruleId==='label')],retained:entries.filter(x=>x.ruleId!=='label')};assert.equal(guard.verifyBaselineAcceptance(review),true);const wrong=structuredClone(review);wrong.newlyAccepted[0].selector='#different-accepted-debt';assert.throws(()=>guard.verifyBaselineAcceptance(wrong));});
+test('malformed evidence only accepts operational error, never a leftover native PASS',()=>{assert.equal(verifyA11yCase('malformed',null,{...shared,verdict:'error'},2),true);assert.throws(()=>verifyA11yCase('malformed',{verdict:'PASS'},shared,2));});

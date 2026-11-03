@@ -1,0 +1,152 @@
+{
+  "syntheticOnly": true,
+  "scope": "Hypothetical mutations, not new scans/customer results",
+  "baselineSha256": "93238fc58270938ff69b628d4d51c828dfdaf55eb50b85465337a7a9fba2cb5d",
+  "baselineUnchanged": true,
+  "cases": [
+    {
+      "name": "regression-with-coverage-loss",
+      "nativeVerdict": "FAIL",
+      "counts": {
+        "new": 1,
+        "fixed": 0,
+        "stillOpen": 0
+      },
+      "unassessed": 3,
+      "sharedVerdict": "fail",
+      "exitCode": 1
+    },
+    {
+      "name": "error-without-failed-status",
+      "nativeVerdict": "ERROR",
+      "counts": null,
+      "unassessed": null,
+      "sharedVerdict": "error",
+      "exitCode": 2
+    },
+    {
+      "name": "contradictory-complete",
+      "nativeVerdict": "ERROR",
+      "counts": null,
+      "unassessed": null,
+      "sharedVerdict": "error",
+      "exitCode": 2
+    },
+    {
+      "name": "existing-debt",
+      "nativeVerdict": "PASS",
+      "counts": {
+        "new": 0,
+        "fixed": 0,
+        "stillOpen": 3
+      },
+      "unassessed": 0,
+      "sharedVerdict": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "missing-page",
+      "nativeVerdict": "INCOMPLETE",
+      "counts": {
+        "new": 0,
+        "fixed": 0,
+        "stillOpen": 0
+      },
+      "unassessed": 3,
+      "sharedVerdict": "error",
+      "exitCode": 2
+    },
+    {
+      "name": "failed-scan",
+      "nativeVerdict": "INCOMPLETE",
+      "counts": {
+        "new": 0,
+        "fixed": 0,
+        "stillOpen": 0
+      },
+      "unassessed": 3,
+      "sharedVerdict": "error",
+      "exitCode": 2
+    },
+    {
+      "name": "changed-config",
+      "nativeVerdict": "INCOMPLETE",
+      "counts": {
+        "new": 0,
+        "fixed": 0,
+        "stillOpen": 0
+      },
+      "unassessed": 3,
+      "sharedVerdict": "error",
+      "exitCode": 2
+    },
+    {
+      "name": "selector-change",
+      "nativeVerdict": "FAIL",
+      "counts": {
+        "new": 1,
+        "fixed": 0,
+        "stillOpen": 2
+      },
+      "unassessed": 1,
+      "sharedVerdict": "fail",
+      "exitCode": 1
+    },
+    {
+      "name": "observed-removal",
+      "nativeVerdict": "PASS",
+      "counts": {
+        "new": 0,
+        "fixed": 1,
+        "stillOpen": 2
+      },
+      "unassessed": 0,
+      "sharedVerdict": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "added-finding",
+      "nativeVerdict": "FAIL",
+      "counts": {
+        "new": 1,
+        "fixed": 0,
+        "stillOpen": 3
+      },
+      "unassessed": 0,
+      "sharedVerdict": "fail",
+      "exitCode": 1
+    },
+    {
+      "name": "manual-assertion",
+      "nativeVerdict": "FAIL",
+      "counts": {
+        "new": 1,
+        "fixed": 0,
+        "stillOpen": 3
+      },
+      "unassessed": 0,
+      "sharedVerdict": "fail",
+      "exitCode": 1
+    },
+    {
+      "name": "malformed",
+      "nativeVerdict": "ERROR",
+      "counts": null,
+      "unassessed": null,
+      "sharedVerdict": "error",
+      "exitCode": 2
+    }
+  ],
+  "baselineProposal": {
+    "newlyAccepted": [
+      {
+        "fingerprint": "label|#synthetic-input|/accessibility",
+        "selector": "#synthetic-input",
+        "ruleId": "label"
+      }
+    ],
+    "acceptedCount": 4,
+    "originalGate": "FAIL"
+  },
+  "customerMetrics": "not measured"
+}

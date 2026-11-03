@@ -1,0 +1,446 @@
+{
+  "tool": "a11ygate",
+  "schemaVersion": 2,
+  "releaseStatus": "unreleased-source-build",
+  "synthetic": true,
+  "version": "0.1.0",
+  "projectName": "QE Dogfood SYNTHETIC coverage",
+  "verdict": "FAIL",
+  "threshold": "minor",
+  "reason": "1 new finding at or above minor: image-alt.",
+  "generatedAt": "2026-11-03T17:15:20.708Z",
+  "coverage": {
+    "status": "complete",
+    "issues": [],
+    "pages": [
+      {
+        "page": "/",
+        "current": 1,
+        "baseline": 1,
+        "comparable": true
+      },
+      {
+        "page": "/items",
+        "current": 1,
+        "baseline": 1,
+        "comparable": true
+      },
+      {
+        "page": "/accessibility",
+        "current": 1,
+        "baseline": 1,
+        "comparable": true
+      }
+    ],
+    "unassessedScope": [
+      "Only supplied page/query/hash states are assessed; undiscovered pages and interactions are unassessed.",
+      "Manual keyboard, screen-reader and usability checks are not performed by the automated gate.",
+      "Origins are intentionally ignored for local CI hosts; equivalent environments must be established by the caller.",
+      "Normalized selectors are heuristic identities, not proof that every affected element is unchanged."
+    ],
+    "unassessedFindings": 1
+  },
+  "baselineReview": {
+    "schemaVersion": 1,
+    "approval": "review-required",
+    "acceptedFindings": [
+      {
+        "fingerprint": "image-alt|#synthetic-relocated-image|/accessibility",
+        "ruleId": "image-alt",
+        "impact": "critical",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "TTv5",
+          "TT7.a",
+          "TT7.b",
+          "EN-301-549",
+          "EN-9.1.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-1.1.1"
+        ],
+        "help": "Images must have alternative text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/image-alt?application=playwright",
+        "selector": "#synthetic-relocated-image",
+        "html": "<img id=\"missing-alt\" src=\"/item.svg\" width=\"80\" height=\"60\">",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "path": "/accessibility",
+        "engineVersion": "4.14.0",
+        "timestamp": "2026-11-02T21:06:54.456Z",
+        "status": "new"
+      },
+      {
+        "fingerprint": "button-name|#unlabelled-button|/accessibility",
+        "ruleId": "button-name",
+        "impact": "critical",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "section508",
+          "section508.22.a",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-11.9.1"
+        ],
+        "help": "Buttons must have discernible text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/button-name?application=playwright",
+        "selector": "#unlabelled-button",
+        "html": "<button id=\"unlabelled-button\" type=\"button\"></button>",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "path": "/accessibility",
+        "engineVersion": "4.14.0",
+        "timestamp": "2026-11-02T21:06:54.456Z",
+        "status": "still-open"
+      },
+      {
+        "fingerprint": "color-contrast|.low-contrast|/accessibility",
+        "ruleId": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+        "selector": ".low-contrast",
+        "html": "<p class=\"low-contrast\">Intentional low contrast text.</p>",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "path": "/accessibility",
+        "engineVersion": "4.14.0",
+        "timestamp": "2026-11-02T21:06:54.456Z",
+        "status": "still-open"
+      }
+    ],
+    "newlyAccepted": [
+      {
+        "fingerprint": "image-alt|#synthetic-relocated-image|/accessibility",
+        "ruleId": "image-alt",
+        "impact": "critical",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "TTv5",
+          "TT7.a",
+          "TT7.b",
+          "EN-301-549",
+          "EN-9.1.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-1.1.1"
+        ],
+        "help": "Images must have alternative text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/image-alt?application=playwright",
+        "selector": "#synthetic-relocated-image",
+        "html": "<img id=\"missing-alt\" src=\"/item.svg\" width=\"80\" height=\"60\">",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "path": "/accessibility",
+        "engineVersion": "4.14.0",
+        "timestamp": "2026-11-02T21:06:54.456Z",
+        "status": "new"
+      }
+    ],
+    "retained": [
+      {
+        "fingerprint": "button-name|#unlabelled-button|/accessibility",
+        "ruleId": "button-name",
+        "impact": "critical",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "section508",
+          "section508.22.a",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-11.9.1"
+        ],
+        "help": "Buttons must have discernible text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/button-name?application=playwright",
+        "selector": "#unlabelled-button",
+        "html": "<button id=\"unlabelled-button\" type=\"button\"></button>",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "path": "/accessibility",
+        "engineVersion": "4.14.0",
+        "timestamp": "2026-11-02T21:06:54.456Z",
+        "status": "still-open"
+      },
+      {
+        "fingerprint": "color-contrast|.low-contrast|/accessibility",
+        "ruleId": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+        "selector": ".low-contrast",
+        "html": "<p class=\"low-contrast\">Intentional low contrast text.</p>",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "path": "/accessibility",
+        "engineVersion": "4.14.0",
+        "timestamp": "2026-11-02T21:06:54.456Z",
+        "status": "still-open"
+      }
+    ],
+    "noLongerObserved": [],
+    "unassessed": [
+      {
+        "fingerprint": "image-alt|#missing-alt|/accessibility",
+        "ruleId": "image-alt",
+        "impact": "critical",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "TTv5",
+          "TT7.a",
+          "TT7.b",
+          "EN-301-549",
+          "EN-9.1.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-1.1.1"
+        ],
+        "help": "Images must have alternative text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/image-alt?application=playwright",
+        "selector": "#missing-alt",
+        "html": "<img id=\"missing-alt\" src=\"/item.svg\" width=\"80\" height=\"60\">",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "path": "/accessibility",
+        "engineVersion": "4.14.0",
+        "timestamp": "2026-11-02T21:06:54.456Z",
+        "status": "unassessed",
+        "assessmentReason": "A selector changed or another occurrence was found; resolution is unverified."
+      }
+    ],
+    "pages": [
+      "http://127.0.0.1:4319/",
+      "http://127.0.0.1:4319/items",
+      "http://127.0.0.1:4319/accessibility"
+    ],
+    "coverage": {
+      "status": "complete",
+      "issues": [],
+      "pages": [
+        {
+          "page": "/",
+          "current": 1,
+          "baseline": 1,
+          "comparable": true
+        },
+        {
+          "page": "/items",
+          "current": 1,
+          "baseline": 1,
+          "comparable": true
+        },
+        {
+          "page": "/accessibility",
+          "current": 1,
+          "baseline": 1,
+          "comparable": true
+        }
+      ],
+      "unassessedScope": [
+        "Only supplied page/query/hash states are assessed; undiscovered pages and interactions are unassessed.",
+        "Manual keyboard, screen-reader and usability checks are not performed by the automated gate.",
+        "Origins are intentionally ignored for local CI hosts; equivalent environments must be established by the caller.",
+        "Normalized selectors are heuristic identities, not proof that every affected element is unchanged."
+      ],
+      "unassessedFindings": 1
+    },
+    "warning": "This proposal accepts the listed current findings as existing debt, not resolved issues. Review and commit separately; no approval or certification is implied."
+  },
+  "manualChecks": [],
+  "manualEvidenceNotice": "Self-reported human evidence, not identity-verified or automatically assessed; never improves the automated gate. Unrecorded scopes remain unassessed.",
+  "counts": {
+    "new": 1,
+    "fixed": 0,
+    "stillOpen": 2
+  },
+  "findings": {
+    "new": [
+      {
+        "status": "new",
+        "guidance": {
+          "userImpact": "People using screen readers may miss the purpose or information conveyed by the image.",
+          "remediation": "Provide contextual alternative text for informative images; use empty alt for genuinely decorative images.",
+          "verification": [
+            "Re-run axe on the same page/state and selector.",
+            "Listen with a screen reader and confirm the alternative conveys the same purpose without redundant detail."
+          ],
+          "source": "Rule-based guidance; contextual human review required, not legal advice or certification."
+        },
+        "fingerprint": "image-alt|#synthetic-relocated-image|/accessibility",
+        "ruleId": "image-alt",
+        "impact": "critical",
+        "path": "/accessibility",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "selector": "#synthetic-relocated-image",
+        "html": "<img id=\"missing-alt\" src=\"/item.svg\" width=\"80\" height=\"60\">",
+        "help": "Images must have alternative text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/image-alt?application=playwright",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "TTv5",
+          "TT7.a",
+          "TT7.b",
+          "EN-301-549",
+          "EN-9.1.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-1.1.1"
+        ]
+      }
+    ],
+    "fixed": [],
+    "stillOpen": [
+      {
+        "status": "still-open",
+        "guidance": {
+          "userImpact": "Screen-reader and voice-control users may not know the purpose of this button.",
+          "remediation": "Give the button a clear accessible name matching its visible purpose; prefer visible text.",
+          "verification": [
+            "Inspect its computed accessible name and re-run axe.",
+            "Operate it by keyboard and verify the announced name and resulting state with assistive technology."
+          ],
+          "source": "Rule-based guidance; contextual human review required, not legal advice or certification."
+        },
+        "fingerprint": "button-name|#unlabelled-button|/accessibility",
+        "ruleId": "button-name",
+        "impact": "critical",
+        "path": "/accessibility",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "selector": "#unlabelled-button",
+        "html": "<button id=\"unlabelled-button\" type=\"button\"></button>",
+        "help": "Buttons must have discernible text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/button-name?application=playwright",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "section508",
+          "section508.22.a",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-11.9.1"
+        ]
+      },
+      {
+        "status": "still-open",
+        "guidance": {
+          "userImpact": "People with low vision or color-vision differences may not be able to read the affected content.",
+          "remediation": "Adjust foreground/background colors to meet the applicable contrast ratio; include hover, focus and disabled states where relevant.",
+          "verification": [
+            "Re-run axe on the same page/state and affected selector.",
+            "Measure rendered contrast (normally 4.5:1 text or 3:1 large text); review gradients and dynamic states manually."
+          ],
+          "source": "Rule-based guidance; contextual human review required, not legal advice or certification."
+        },
+        "fingerprint": "color-contrast|.low-contrast|/accessibility",
+        "ruleId": "color-contrast",
+        "impact": "serious",
+        "path": "/accessibility",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "selector": ".low-contrast",
+        "html": "<p class=\"low-contrast\">Intentional low contrast text.</p>",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "unassessed": [
+      {
+        "status": "unassessed",
+        "assessmentReason": "A selector changed or another occurrence was found; resolution is unverified.",
+        "guidance": {
+          "userImpact": "People using screen readers may miss the purpose or information conveyed by the image.",
+          "remediation": "Provide contextual alternative text for informative images; use empty alt for genuinely decorative images.",
+          "verification": [
+            "Re-run axe on the same page/state and selector.",
+            "Listen with a screen reader and confirm the alternative conveys the same purpose without redundant detail."
+          ],
+          "source": "Rule-based guidance; contextual human review required, not legal advice or certification."
+        },
+        "fingerprint": "image-alt|#missing-alt|/accessibility",
+        "ruleId": "image-alt",
+        "impact": "critical",
+        "path": "/accessibility",
+        "url": "http://127.0.0.1:4319/accessibility",
+        "selector": "#missing-alt",
+        "html": "<img id=\"missing-alt\" src=\"/item.svg\" width=\"80\" height=\"60\">",
+        "help": "Images must have alternative text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/image-alt?application=playwright",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "TTv5",
+          "TT7.a",
+          "TT7.b",
+          "EN-301-549",
+          "EN-9.1.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-1.1.1"
+        ]
+      }
+    ]
+  }
+}

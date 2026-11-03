@@ -1,0 +1,133 @@
+{
+  "syntheticOnly": true,
+  "beforeActionCommit": "1c6136812a6bdb0e26e97df46efb4ae08f4d244a",
+  "afterActionCommit": "73e911d1b19ba4aeb52be94fa37de6c668225cf3",
+  "comparisons": [
+    {
+      "case": "missing-page",
+      "before": {
+        "verdict": "PASS",
+        "counts": {
+          "new": 0,
+          "fixed": 3,
+          "stillOpen": 0
+        },
+        "exitCode": 0
+      },
+      "after": {
+        "verdict": "INCOMPLETE",
+        "counts": {
+          "new": 0,
+          "fixed": 0,
+          "stillOpen": 0
+        },
+        "unassessed": 3
+      }
+    },
+    {
+      "case": "failed-scan",
+      "before": {
+        "verdict": "PASS",
+        "counts": {
+          "new": 0,
+          "fixed": 3,
+          "stillOpen": 0
+        },
+        "exitCode": 0
+      },
+      "after": {
+        "verdict": "INCOMPLETE",
+        "counts": {
+          "new": 0,
+          "fixed": 0,
+          "stillOpen": 0
+        },
+        "unassessed": 3
+      }
+    },
+    {
+      "case": "changed-config",
+      "before": {
+        "verdict": "PASS",
+        "counts": {
+          "new": 0,
+          "fixed": 3,
+          "stillOpen": 0
+        },
+        "exitCode": 0
+      },
+      "after": {
+        "verdict": "INCOMPLETE",
+        "counts": {
+          "new": 0,
+          "fixed": 0,
+          "stillOpen": 0
+        },
+        "unassessed": 3
+      }
+    },
+    {
+      "case": "selector-change",
+      "before": {
+        "verdict": "FAIL",
+        "counts": {
+          "new": 1,
+          "fixed": 1,
+          "stillOpen": 2
+        },
+        "exitCode": 1
+      },
+      "after": {
+        "verdict": "FAIL",
+        "counts": {
+          "new": 1,
+          "fixed": 0,
+          "stillOpen": 2
+        },
+        "unassessed": 1
+      }
+    },
+    {
+      "case": "regression-with-coverage-loss",
+      "before": {
+        "verdict": "FAIL",
+        "counts": {
+          "new": 1,
+          "fixed": 3,
+          "stillOpen": 0
+        },
+        "exitCode": 1
+      },
+      "after": {
+        "verdict": "FAIL",
+        "counts": {
+          "new": 1,
+          "fixed": 0,
+          "stillOpen": 0
+        },
+        "unassessed": 3
+      }
+    },
+    {
+      "case": "existing-debt",
+      "before": {
+        "verdict": "PASS",
+        "counts": {
+          "new": 0,
+          "fixed": 0,
+          "stillOpen": 3
+        },
+        "exitCode": 0
+      },
+      "after": {
+        "verdict": "PASS",
+        "counts": {
+          "new": 0,
+          "fixed": 0,
+          "stillOpen": 3
+        },
+        "unassessed": 0
+      }
+    }
+  ]
+}

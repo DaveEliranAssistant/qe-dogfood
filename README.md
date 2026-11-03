@@ -65,3 +65,7 @@ MIT; see [LICENSE](LICENSE). Product code consumed by Actions remains subject to
 ## Synthetic evidence-triage increment (in review)
 
 A separate [FlakeLens evidence-triage fixture and CI quickstart](docs/FLAKELENS_TRIAGE.md) exercises insufficient evidence, explicit retry recovery, persistent regression, missing metadata and skipped-only cases using a pinned revision of the existing public CLI. It retains native/shared FAIL for the deliberately seeded regression while asserting the declared synthetic oracle. This is not customer data, a clean application gate or an automatic quarantine policy. Existing A/B intent, frozen baselines and the original QE workflow stay unchanged.
+
+## Separate synthetic accessibility coverage proof
+
+The review-only `demo/a11ygate-coverage-evidence` contribution exercises the pinned coverage-aware Action on declared hypothetical mutations of the original scan evidence. It does not regenerate the approved baseline, alter app/A-B intent or weaken any original assertion. See [the proof guide](docs/A11Y_COVERAGE.md).
