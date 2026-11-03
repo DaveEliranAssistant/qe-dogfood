@@ -3,6 +3,7 @@
 Changes are on the same open implementation PRs; no merges and no main pushes are authorized. PR A/B and the fourth-producer PR receive wiring-only cherry-picks, not merges. Frozen accessibility baseline, application/OpenAPI fixtures, collection assertions, gate enforcement and removal engine remain unchanged.
 
 - Each native product has its own upload. The consolidated Action receives actual `upload-artifact` output URLs keyed by shared-result file paths.
+- Native A11yGate job-summary appending is disabled in this pipeline (its standalone default stays enabled), so the final consolidated section is the first and only product summary, not merely prepended within its own per-step summary file. Native artifacts remain complete.
 - The Action prepares HTML/JSON, uploads the pair together, then uses that upload URL in a compact comment and the first job-summary section. Native Markdown is retained only in full HTML, not pasted into the comment.
 - Up to ten findings per product in the comment, sorted New, Fixed, Still open (collapsed). All shared/native detail remains in full HTML/artifacts. Shared results cap at 100 findings, as before.
 - FlakeLens emits WARN for flaky-only, FAIL for regressions, PASS only for zero flaky/zero regressions. WARN is yellow and remains part of the overall verdict. No native CLI exit or existing gate is weakened. Warnings are non-blocking by default, with an explicit fail-on-warn option for enforce mode.
