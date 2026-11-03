@@ -1,7 +1,7 @@
 {
   "schemaVersion": "qe-dogfood.vendor/1",
   "sourceRepository": "https://github.com/DaveEliranAssistant/specgate",
-  "sourceCommit": "322b4cbaca45458a701a1af713fef180f6764f94",
+  "sourceCommit": "76ff58088bda901df6b557a41173d3cae9468d04",
   "sourcePR": "https://github.com/DaveEliranAssistant/specgate/pull/3",
   "scope": "Owner-requested result emission; MIT removal CLI and result adapter only. Engine, license and historical provenance unchanged.",
   "files": [
@@ -27,7 +27,7 @@
     },
     {
       "path": "vendor/specgate/qe-result.mjs",
-      "sha256": "bf28a99778bc31b7b3fca7f0c1655253c92c7d0f9079bd1e8b5b585e725ff9e8"
+      "sha256": "b357898c126e1f234a68ce7aac625c990e0ba7eb9bbb7094904ab43ca1816db2"
     }
   ]
 }
