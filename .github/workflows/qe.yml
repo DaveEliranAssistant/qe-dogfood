@@ -7,6 +7,10 @@ on:
         description: Trusted base ref for removal/baseline comparison
         required: true
         default: main
+      demo_fourth_product:
+        description: Include an explicitly synthetic fourth-product demo result
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -47,6 +51,7 @@ jobs:
   products:
     name: Product reports
     needs: collect
+    if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -66,8 +71,14 @@ jobs:
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           repository: DaveEliranAssistant/flakelens
-          ref: ec0969e0e2b3171f664cd351c60979b5c227fcbf
+          ref: 21ee64a52c2d1d101be80eaf58c01c20bb98efb9
           path: flakelens
+          persist-credentials: false
+      - name: Immutable reviewed SpecGate adapter snapshot (no private token)
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: 7f6a748e7d20f5a507e690e5ce28225080851c99
+          path: report-tools
           persist-credentials: false
       - name: Install FlakeLens locked dependencies without lifecycle scripts
         working-directory: flakelens
@@ -88,26 +99,19 @@ jobs:
         id: a11y
         if: ${{ !cancelled() && steps.evidence.outcome == 'success' }}
         continue-on-error: true
-        uses: DaveEliranAssistant/a11ygate-action@v1
+        uses: DaveEliranAssistant/a11ygate-action@69452695759a5506f008a45f0a8bcb05596bb6d3
         with:
           current: evidence/axe-results.json
           baseline: trusted/a11y-baseline.json
           threshold: minor
           markdown: product-reports/a11ygate.md
           json: product-reports/a11ygate.json
-          comment: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+          comment: 'false'
       - name: SpecGate exact path and operation removals only
         id: specgate
         if: ${{ !cancelled() && steps.evidence.outcome == 'success' }}
         continue-on-error: true
-        run: node trusted/vendor/specgate/cli.mjs --base trusted/openapi.json --head evidence/openapi-head.json --json product-reports/specgate.json --markdown product-reports/specgate.md
-      - name: Append reports and provenance to the job summary
-        if: always()
-        run: node trusted/scripts/summarize.mjs
-        env:
-          FLAKELENS_OUTCOME: ${{ steps.flakelens.outcome }}
-          A11YGATE_OUTCOME: ${{ steps.a11y.outcome }}
-          SPECGATE_OUTCOME: ${{ steps.specgate.outcome }}
+        run: node report-tools/vendor/specgate/cli.mjs --base trusted/openapi.json --head evidence/openapi-head.json --json product-reports/specgate.json --markdown product-reports/specgate.md
       - name: Upload product reports even when gates fail
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -123,3 +127,22 @@ jobs:
           FLAKELENS_OUTCOME: ${{ steps.flakelens.outcome }}
           A11YGATE_OUTCOME: ${{ steps.a11y.outcome }}
           SPECGATE_OUTCOME: ${{ steps.specgate.outcome }}
+      - name: Optional synthetic fourth-product contract demonstration
+        if: ${{ always() && (inputs.demo_fourth_product == true || github.head_ref == 'demo/consolidated-fourth-product') }}
+        run: |
+          mkdir -p product-reports
+          node --input-type=module -e "import fs from 'node:fs'; fs.writeFileSync('product-reports/qe-result-demo-fourth.json',JSON.stringify({schemaVersion:1,product:'DemoFourthProduct',version:'demo-only',verdict:'pass',headline:'Synthetic contract demonstration only; not a real product check',metrics:[{label:'demo',value:1}],findings:[],runUrl:process.env.RUN_URL}));"
+        env:
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      - name: Consolidated QE Atlas Report
+        if: always()
+        uses: DaveEliranAssistant/qe-atlas-report@529ba98d526f7e70b6f9836009da61252b344f0c
+        with:
+          results: product-reports/qe-result*.json
+          expected-files: |
+            product-reports/qe-result-a11ygate.json
+            product-reports/qe-result-flakelens.json
+            product-reports/qe-result-specgate.json
+          mode: report-only
+          comment: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+
