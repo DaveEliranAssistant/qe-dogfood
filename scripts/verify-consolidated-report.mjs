@@ -14,15 +14,24 @@ try{
  const context=await browser.newContext({viewport:{width:1440,height:1000},bypassCSP:true});
  const page=await context.newPage();
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(url);await page.locator('h1').waitFor();
+ await page.goto(process.argv[3]||url);await page.locator('h1').waitFor();
  const report=JSON.parse(readFileSync(join(dir,'report.json'),'utf8'));
  assert.equal(await page.locator('tbody tr').count(),report.results.length);
  assert.match(await page.locator('h1').innerText(),new RegExp(report.verdict.toUpperCase()));
  await page.screenshot({path:join(dir,'consolidated-desktop.png'),fullPage:true});
  await page.screenshot({path:join(dir,'consolidated-overview.png')});
- await page.locator('details summary').first().focus();
- await page.keyboard.press('Space');assert.equal(await page.locator('details').first().getAttribute('open'),null);
- await page.keyboard.press('Space');assert.notEqual(await page.locator('details').first().getAttribute('open'),null);
+ assert.equal(await page.locator('details[open]').count(),0,'Still-open and native reports must start collapsed');
+ for(const details of await page.locator('details').all()){
+  await details.locator('summary').focus();await page.keyboard.press('Space');assert.notEqual(await details.getAttribute('open'),null);
+  await page.keyboard.press('Space');assert.equal(await details.getAttribute('open'),null);
+ }
+ for(const details of await page.locator('details').all())await details.evaluate(el=>{el.open=true;});
+ for(const [i,r] of report.results.entries()){
+  const section=page.locator(`#product-${i+1}`);assert.ok(await section.locator(`a[href="${r.runUrl}"]`).count());
+  if(r.artifacts?.length)assert.ok(await section.locator(`a[href="${r.artifacts[0].url}"]`).count());
+ }
+ if(report.targetLabel)assert.ok((await page.locator('h1').innerText()).includes(report.targetLabel));
+
  const axe=await new AxeBuilder({page}).analyze();
  writeFileSync(join(dir,'report-axe-results.json'),JSON.stringify(axe,null,2)+'\n');
  assert.equal(axe.violations.length,0,JSON.stringify(axe.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.length}))));
