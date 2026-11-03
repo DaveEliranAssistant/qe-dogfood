@@ -99,7 +99,7 @@ jobs:
         id: a11y
         if: ${{ !cancelled() && steps.evidence.outcome == 'success' }}
         continue-on-error: true
-        uses: DaveEliranAssistant/a11ygate-action@1158465f2f6260df1868c7c389a18f8e430b5b93
+        uses: DaveEliranAssistant/a11ygate-action@1c6136812a6bdb0e26e97df46efb4ae08f4d244a
         with:
           current: evidence/axe-results.json
           baseline: trusted/a11y-baseline.json
@@ -108,6 +108,7 @@ jobs:
           markdown: product-reports/a11ygate.md
           json: product-reports/a11ygate.json
           comment: 'false'
+          summary: 'false'
       - name: SpecGate exact path and operation removals only
         id: specgate
         if: ${{ !cancelled() && steps.evidence.outcome == 'success' }}
