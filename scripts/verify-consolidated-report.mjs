@@ -1,0 +1,35 @@
+import {chromium} from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+import {createServer} from 'node:http';
+import {readFileSync,writeFileSync} from 'node:fs';
+import {resolve,join} from 'node:path';
+import assert from 'node:assert/strict';
+const dir=resolve(process.argv[2]);
+const server=createServer((req,res)=>{if(req.url!=='/report.html'){res.writeHead(404).end();return;}res.setHeader('Content-Type','text/html; charset=utf-8');res.end(readFileSync(join(dir,'report.html')));});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));
+const url=`http://127.0.0.1:${server.address().port}/report.html`;
+let browser;
+try{
+ browser=await chromium.launch({headless:true,...(process.env.REPORT_BROWSER_CHANNEL?{channel:process.env.REPORT_BROWSER_CHANNEL}:{})});
+ const context=await browser.newContext({viewport:{width:1440,height:1000},bypassCSP:true});
+ const page=await context.newPage();
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(url);await page.locator('h1').waitFor();
+ const report=JSON.parse(readFileSync(join(dir,'report.json'),'utf8'));
+ assert.equal(await page.locator('tbody tr').count(),report.results.length);
+ assert.match(await page.locator('h1').innerText(),new RegExp(report.verdict.toUpperCase()));
+ await page.screenshot({path:join(dir,'consolidated-desktop.png'),fullPage:true});
+ await page.screenshot({path:join(dir,'consolidated-overview.png')});
+ await page.locator('details summary').first().focus();
+ await page.keyboard.press('Space');assert.equal(await page.locator('details').first().getAttribute('open'),null);
+ await page.keyboard.press('Space');assert.notEqual(await page.locator('details').first().getAttribute('open'),null);
+ const axe=await new AxeBuilder({page}).analyze();
+ writeFileSync(join(dir,'report-axe-results.json'),JSON.stringify(axe,null,2)+'\n');
+ assert.equal(axe.violations.length,0,JSON.stringify(axe.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.length}))));
+ await page.setViewportSize({width:390,height:844});
+ await page.screenshot({path:join(dir,'consolidated-mobile.png'),fullPage:true});
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ assert.deepEqual(errors,[]);
+ const receipt={verdict:report.verdict,products:report.results.map(r=>r.product),axeViolations:axe.violations.length,keyboardAndDetails:'native details exercised',browserErrors:errors};
+ writeFileSync(join(dir,'browser-verification.json'),JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify(receipt));
+}finally{await browser?.close();await new Promise(r=>server.close(r));}
