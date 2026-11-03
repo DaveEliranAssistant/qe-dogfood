@@ -1,0 +1,73 @@
+name: FlakeLens SYNTHETIC evidence triage
+on:
+  pull_request:
+    paths:
+      - 'fixtures/flakelens-triage/**'
+      - 'scripts/verify-flakelens-triage.mjs'
+      - 'test/flakelens-triage.test.mjs'
+      - 'docs/flakelens-triage-evidence/**'
+      - 'docs/FLAKELENS_TRIAGE.md'
+      - '.github/workflows/flakelens-triage.yml'
+permissions:
+  contents: read
+jobs:
+  synthetic-proof:
+    name: Verify synthetic classifications — not application health
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      FLAKELENS_REF: 647f7d83b36b6f4d0878611078fea28e0babc583
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: dogfood
+          persist-credentials: false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: DaveEliranAssistant/flakelens
+          ref: 647f7d83b36b6f4d0878611078fea28e0babc583
+          path: flakelens
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - name: Locked CLI dependencies; lifecycle scripts disabled
+        working-directory: flakelens
+        run: npm ci --ignore-scripts
+      - name: Independent synthetic oracle guard tests
+        working-directory: dogfood
+        run: node --test test/flakelens-triage.test.mjs
+      - run: mkdir reports
+      - name: Analyze declared synthetic XML with the existing shared CLI
+        working-directory: flakelens
+        run: >-
+          node --import tsx scripts/cli.ts
+          --json ../reports/flakelens.json --markdown ../reports/flakelens.md
+          --qe-result ../reports/qe-result-flakelens.json
+          ../dogfood/fixtures/flakelens-triage/run-1.xml
+          ../dogfood/fixtures/flakelens-triage/run-2.xml
+          ../dogfood/fixtures/flakelens-triage/run-3.xml
+          ../dogfood/fixtures/flakelens-triage/missing-metadata.xml
+      - name: Assert abstentions, recovery and regression; no automatic quarantine
+        working-directory: dogfood
+        run: node scripts/verify-flakelens-triage.mjs ../reports/flakelens.json ../reports/qe-result-flakelens.json
+      - name: Record exact checked-out product revision
+        run: git -C flakelens rev-parse HEAD > reports/flakelens-revision.txt
+      - name: Labeled synthetic job summary
+        if: success()
+        run: >-
+          node --input-type=module -e 'import fs from "node:fs";
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+          "## SYNTHETIC FlakeLens fixture — not customer CI\n\nPassing assertions means the declared fixture oracle matched. The seeded regression remains FAIL in qe-result; analysis exit 0 is not a clean application gate. Original QE workflow/gates and A/B intent are unchanged.\n\n"
+          +fs.readFileSync("reports/flakelens.md","utf8"));'
+      - name: Retain synthetic inputs and native/shared reports only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: flakelens-SYNTHETIC-triage-proof
+          path: |
+            reports/
+            dogfood/fixtures/flakelens-triage/
+          if-no-files-found: error
+          retention-days: 14
