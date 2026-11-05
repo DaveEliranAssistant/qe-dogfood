@@ -1,0 +1,19 @@
+{
+  "tool": "a11ygate",
+  "version": "0.0.0",
+  "projectName": "127.0.0.1:56531",
+  "verdict": "PASS",
+  "threshold": "minor",
+  "reason": "No new finding is at or above minor.",
+  "generatedAt": "2026-11-03T07:24:07.521Z",
+  "counts": {
+    "new": 0,
+    "fixed": 0,
+    "stillOpen": 0
+  },
+  "findings": {
+    "new": [],
+    "fixed": [],
+    "stillOpen": []
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "verifiedDate": "2026-11-03",
+  "reporterRuntimeCommit": "529ba98d526f7e70b6f9836009da61252b344f0c",
+  "reporterTestCommit": "8f5ed693e694606387042f9b89a5d5bdbfeb3b8a",
+  "unchangedMain": "296316d1ba74a980e409d45de220818c960cdcf3",
+  "runs": [
+    {
+      "label": "A",
+      "pr": 1,
+      "runUrl": "https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/41594255626",
+      "attempt": 1,
+      "headSha": "7268b70c936b2205ec2005f0a67a974345d3c090",
+      "workflowConclusion": "failure",
+      "overall": "fail",
+      "products": [
+        {
+          "product": "A11yGate",
+          "verdict": "fail",
+          "metrics": [
+            {
+              "label": "new",
+              "value": 1
+            },
+            {
+              "label": "fixed",
+              "value": 0
+            },
+            {
+              "label": "still-open",
+              "value": 3
+            },
+            {
+              "label": "threshold",
+              "value": "minor"
+            }
+          ]
+        },
+        {
+          "product": "FlakeLens",
+          "verdict": "pass",
+          "metrics": [
+            {
+              "label": "runs",
+              "value": 5
+            },
+            {
+              "label": "tests",
+              "value": 5
+            },
+            {
+              "label": "flaky",
+              "value": 1
+            },
+            {
+              "label": "regressions",
+              "value": 0
+            },
+            {
+              "label": "stable",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "product": "SpecGate",
+          "verdict": "fail",
+          "metrics": [
+            {
+              "label": "removed paths",
+              "value": 1
+            },
+            {
+              "label": "removed operations",
+              "value": 0
+            },
+            {
+              "label": "manual review",
+              "value": "required"
+            }
+          ]
+        }
+      ],
+      "commentUrl": "https://github.com/DaveEliranAssistant/qe-dogfood/pull/1#issuecomment-6597636876",
+      "commentId": 6597636876,
+      "artifactUrl": "https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/41594255626/artifacts/13211238898",
+      "artifactDigest": "sha256:f2a7638e71262582c42fcf5ec3549db079e0ea24c4ed0d8ae756b92dd39e5007",
+      "reportHtmlSha256": "7aa069f7ba7ad8bdfc659b25ca067ce6ef2806b247862fffd5b133b88c3313eb",
+      "reportJsonSha256": "0dfe66b0ec524cc5e5d4ae8d66c50865aa1e205807a7a21512385fd131afbd24",
+      "axeViolations": 0,
+      "desktopAndMobileChecked": true
+    },
+    {
+      "label": "B",
+      "pr": 2,
+      "runUrl": "https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/41594264027",
+      "attempt": 2,
+      "headSha": "e380f4cf3a489a199e1359ec55db27d723236a08",
+      "workflowConclusion": "success",
+      "overall": "pass",
+      "products": [
+        {
+          "product": "A11yGate",
+          "verdict": "pass",
+          "metrics": [
+            {
+              "label": "new",
+              "value": 0
+            },
+            {
+              "label": "fixed",
+              "value": 0
+            },
+            {
+              "label": "still-open",
+              "value": 3
+            },
+            {
+              "label": "threshold",
+              "value": "minor"
+            }
+          ]
+        },
+        {
+          "product": "FlakeLens",
+          "verdict": "pass",
+          "metrics": [
+            {
+              "label": "runs",
+              "value": 5
+            },
+            {
+              "label": "tests",
+              "value": 5
+            },
+            {
+              "label": "flaky",
+              "value": 1
+            },
+            {
+              "label": "regressions",
+              "value": 0
+            },
+            {
+              "label": "stable",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "product": "SpecGate",
+          "verdict": "pass",
+          "metrics": [
+            {
+              "label": "removed paths",
+              "value": 0
+            },
+            {
+              "label": "removed operations",
+              "value": 0
+            },
+            {
+              "label": "manual review",
+              "value": "required"
+            }
+          ]
+        }
+      ],
+      "commentUrl": "https://github.com/DaveEliranAssistant/qe-dogfood/pull/2#issuecomment-6597642970",
+      "commentId": 6597642970,
+      "artifactUrl": "https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/41594264027/artifacts/13211304677",
+      "artifactDigest": "sha256:9cfec78b90edf564c46ad39ffad0052c4fd78d46100ec27547ef47a10a75ffc4",
+      "reportHtmlSha256": "756f48393169f9bd8395e25ac12fa41e240ea39ef7a84d80a03b8b3082dabf6f",
+      "reportJsonSha256": "c7b348b302f455c292a107768e33ee04dacea9f3881eb3904a30c36805f79bd9",
+      "axeViolations": 0,
+      "desktopAndMobileChecked": true
+    },
+    {
+      "label": "fourth",
+      "pr": 8,
+      "runUrl": "https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/41594419194",
+      "attempt": 1,
+      "headSha": "f488a685013fc2b34c3980e127a7694448cc5704",
+      "workflowConclusion": "success",
+      "overall": "pass",
+      "products": [
+        {
+          "product": "A11yGate",
+          "verdict": "pass",
+          "metrics": [
+            {
+              "label": "new",
+              "value": 0
+            },
+            {
+              "label": "fixed",
+              "value": 0
+            },
+            {
+              "label": "still-open",
+              "value": 3
+            },
+            {
+              "label": "threshold",
+              "value": "minor"
+            }
+          ]
+        },
+        {
+          "product": "DemoFourthProduct",
+          "verdict": "pass",
+          "metrics": [
+            {
+              "label": "demo",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "product": "FlakeLens",
+          "verdict": "pass",
+          "metrics": [
+            {
+              "label": "runs",
+              "value": 5
+            },
+            {
+              "label": "tests",
+              "value": 5
+            },
+            {
+              "label": "flaky",
+              "value": 1
+            },
+            {
+              "label": "regressions",
+              "value": 0
+            },
+            {
+              "label": "stable",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "product": "SpecGate",
+          "verdict": "pass",
+          "metrics": [
+            {
+              "label": "removed paths",
+              "value": 0
+            },
+            {
+              "label": "removed operations",
+              "value": 0
+            },
+            {
+              "label": "manual review",
+              "value": "required"
+            }
+          ]
+        }
+      ],
+      "commentUrl": "https://github.com/DaveEliranAssistant/qe-dogfood/pull/8#issuecomment-6597671810",
+      "commentId": 6597671810,
+      "artifactUrl": "https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/41594419194/artifacts/13211820907",
+      "artifactDigest": "sha256:059fdf0b08854d0239bd5f611a459f3cdb5676f5bbfc9068044c8b09e32d4f67",
+      "reportHtmlSha256": "8db0755d2f8960bcb7da83a509aa481cc7084786dd035323c733ec9a8c2bb921",
+      "reportJsonSha256": "76d732d1a7f2ba809cc248155b04cbe4d91b60e5da08225bbc4b0ba79516726a",
+      "axeViolations": 0,
+      "desktopAndMobileChecked": true
+    }
+  ]
+}

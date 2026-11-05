@@ -1,0 +1,12 @@
+{
+  "verdict": "pass",
+  "products": [
+    "A11yGate",
+    "DemoFourthProduct",
+    "FlakeLens",
+    "SpecGate"
+  ],
+  "axeViolations": 0,
+  "keyboardAndDetails": "native details exercised",
+  "browserErrors": []
+}

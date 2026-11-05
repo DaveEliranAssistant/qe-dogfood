@@ -1,5 +1,7 @@
 # Verified dogfood runs — 2026-11-02
 
+**Superseded presentation:** See [Consolidated QE Atlas Report](CONSOLIDATED_REPORT.md) for current A/B runs, one updating comment, HTML artifacts and screenshots. The original raw evidence below remains historical; no baseline changes.
+
 ## Open these two runs
 
 | Demo | Open PR | Actions run | Actual conclusion |
@@ -19,9 +21,9 @@ Open the run, then **Product reports** and its job summary. A11yGate contributes
 | A11yGate | **FAIL**: 1 new `label` finding, 0 fixed, 3 still open | **PASS**: 0 new, 0 fixed, 3 still open |
 | SpecGate | **FAIL_REMOVALS**: 1 `PATH_REMOVED` at `/paths/~1api~1health`; no duplicate operation finding | **PASS_REMOVAL_RULES_ONLY**: no path/operation removals |
 
-Actual A11yGate comments:
-- [PR A failure comment](https://github.com/DaveEliranAssistant/qe-dogfood/pull/1#issuecomment-6589001790)
-- [PR B passing comment](https://github.com/DaveEliranAssistant/qe-dogfood/pull/2#issuecomment-6589005715)
+Current consolidated comments (historical A11yGate-only bot comments were retired after verified replacement):
+- [PR A failure report](https://github.com/DaveEliranAssistant/qe-dogfood/pull/1#issuecomment-6597636876)
+- [PR B passing report](https://github.com/DaveEliranAssistant/qe-dogfood/pull/2#issuecomment-6597642970)
 
 Verified source commits:
 - A: `298f483d8c7bc3ac65307359c54754bf498add2a`

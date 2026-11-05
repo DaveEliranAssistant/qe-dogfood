@@ -7,6 +7,10 @@ on:
         description: Trusted base ref for removal/baseline comparison
         required: true
         default: main
+      demo_fourth_product:
+        description: Include an explicitly synthetic fourth-product demo result
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -47,6 +51,7 @@ jobs:
   products:
     name: Product reports
     needs: collect
+    if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -66,8 +71,14 @@ jobs:
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           repository: DaveEliranAssistant/flakelens
-          ref: ec0969e0e2b3171f664cd351c60979b5c227fcbf
+          ref: e0a76acf21b83a0cb4b73ee82035582ed8488e1b
           path: flakelens
+          persist-credentials: false
+      - name: Immutable reviewed SpecGate adapter snapshot (no private token)
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: 730d79836899b7e3f8591db682da8277a29f6d7c
+          path: report-tools
           persist-credentials: false
       - name: Install FlakeLens locked dependencies without lifecycle scripts
         working-directory: flakelens
@@ -88,26 +99,57 @@ jobs:
         id: a11y
         if: ${{ !cancelled() && steps.evidence.outcome == 'success' }}
         continue-on-error: true
-        uses: DaveEliranAssistant/a11ygate-action@v1
+        uses: DaveEliranAssistant/a11ygate-action@1c6136812a6bdb0e26e97df46efb4ae08f4d244a
         with:
           current: evidence/axe-results.json
           baseline: trusted/a11y-baseline.json
           threshold: minor
+          target-label: QE Dogfood Demo
           markdown: product-reports/a11ygate.md
           json: product-reports/a11ygate.json
-          comment: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+          comment: 'false'
+          summary: 'false'
       - name: SpecGate exact path and operation removals only
         id: specgate
         if: ${{ !cancelled() && steps.evidence.outcome == 'success' }}
         continue-on-error: true
-        run: node trusted/vendor/specgate/cli.mjs --base trusted/openapi.json --head evidence/openapi-head.json --json product-reports/specgate.json --markdown product-reports/specgate.md
-      - name: Append reports and provenance to the job summary
+        run: node report-tools/vendor/specgate/cli.mjs --base trusted/openapi.json --head evidence/openapi-head.json --json product-reports/specgate.json --markdown product-reports/specgate.md
+      - name: Upload a11ygate native report
+        id: upload_a11y
         if: always()
-        run: node trusted/scripts/summarize.mjs
-        env:
-          FLAKELENS_OUTCOME: ${{ steps.flakelens.outcome }}
-          A11YGATE_OUTCOME: ${{ steps.a11y.outcome }}
-          SPECGATE_OUTCOME: ${{ steps.specgate.outcome }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: qe-native-a11ygate
+          path: |
+            product-reports/a11ygate.json
+            product-reports/a11ygate.md
+            product-reports/qe-result-a11ygate.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload flakelens native report
+        id: upload_flakelens
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: qe-native-flakelens
+          path: |
+            product-reports/flakelens.json
+            product-reports/flakelens.md
+            product-reports/qe-result-flakelens.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload specgate native report
+        id: upload_specgate
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: qe-native-specgate
+          path: |
+            product-reports/specgate.json
+            product-reports/specgate.md
+            product-reports/qe-result-specgate.json
+          if-no-files-found: error
+          retention-days: 14
       - name: Upload product reports even when gates fail
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -123,3 +165,77 @@ jobs:
           FLAKELENS_OUTCOME: ${{ steps.flakelens.outcome }}
           A11YGATE_OUTCOME: ${{ steps.a11y.outcome }}
           SPECGATE_OUTCOME: ${{ steps.specgate.outcome }}
+      - name: Optional synthetic fourth-product contract demonstration
+        if: ${{ always() && (inputs.demo_fourth_product == true || github.head_ref == 'demo/consolidated-fourth-product') }}
+        run: |
+          mkdir -p product-reports
+          node --input-type=module -e "import fs from 'node:fs'; fs.writeFileSync('product-reports/qe-result-demo-fourth.json',JSON.stringify({schemaVersion:1,product:'DemoFourthProduct',version:'demo-only',verdict:'pass',headline:'Synthetic contract demonstration only; not a real product check',metrics:[{label:'demo',value:1}],findings:[],runUrl:process.env.RUN_URL}));"
+        env:
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      - name: Upload synthetic fourth-producer evidence
+        id: upload_fourth
+        if: ${{ always() && (inputs.demo_fourth_product == true || github.head_ref == 'demo/consolidated-fourth-product') }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: qe-native-demo-fourth
+          path: product-reports/qe-result-demo-fourth.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Consolidated QE Atlas Report
+        if: always()
+        uses: DaveEliranAssistant/qe-atlas-report@984c0a50cc8112511546a3cf6a9fee5aed99256b
+        with:
+          results: product-reports/qe-result*.json
+          expected-files: |
+            product-reports/qe-result-a11ygate.json
+            product-reports/qe-result-flakelens.json
+            product-reports/qe-result-specgate.json
+          mode: report-only
+          target-label: QE Dogfood Demo
+          require-artifact-links: 'true'
+          artifact-links: |
+            {"product-reports/qe-result-a11ygate.json":"${{ steps.upload_a11y.outputs.artifact-url }}","product-reports/qe-result-flakelens.json":"${{ steps.upload_flakelens.outputs.artifact-url }}","product-reports/qe-result-specgate.json":"${{ steps.upload_specgate.outputs.artifact-url }}","product-reports/qe-result-demo-fourth.json":"${{ steps.upload_fourth.outputs.artifact-url }}"}
+          html-url: ${{ vars.QE_REPORT_HTML_PREVIEWS == 'true' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && format('{0}/pr-{1}/report.html', vars.QE_REPORT_PREVIEW_BASE_URL, github.event.pull_request.number) || '' }}
+          comment: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+
+  preview:
+    name: Optional fork-safe HTML preview
+    needs: products
+    if: ${{ always() && !cancelled() && vars.QE_REPORT_HTML_PREVIEWS == 'true' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      group: qe-report-pages
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: qe-report-preview
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Immutable trusted preview renderer; never execute application code
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          repository: DaveEliranAssistant/qe-atlas-report
+          ref: 984c0a50cc8112511546a3cf6a9fee5aed99256b
+          path: reporter
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24
+      - name: Re-render latest available open-PR JSON reports into numeric preview paths
+        run: node reporter/src/preview.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          QE_PREVIEW_DIRECTORY: preview-site
+          QE_PREVIEW_ENABLED: ${{ vars.QE_REPORT_HTML_PREVIEWS }}
+      - name: Upload Pages site
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
+        with:
+          path: preview-site
+      - name: Deploy optional HTML previews
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e
