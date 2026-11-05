@@ -1,0 +1,124 @@
+name: A11yGate SYNTHETIC coverage and permissions proof
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  cases:
+    name: Synthetic cases and expected read-only comment denial
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: consumer
+          persist-credentials: false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: trusted
+          persist-credentials: false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          repository: DaveEliranAssistant/a11ygate-action
+          ref: 73e911d1b19ba4aeb52be94fa37de6c668225cf3
+          path: a11ygate-action
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24
+      - name: Preserve all original baseline and oracle assertions
+        working-directory: consumer
+        run: npm ci --ignore-scripts && npm test && npm run typecheck
+      - name: Execute actual pinned Action on declared hypothetical inputs
+        working-directory: consumer
+        run: node scripts/run-a11y-coverage.mjs ../a11ygate-action ../trusted/a11y-baseline.json reports/a11y-coverage
+      - name: Artifact and summary fallback, including forks
+        working-directory: consumer
+        run: node -e "const fs=require('fs');fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,fs.readFileSync('reports/a11y-coverage/existing-debt.md'))"
+      - name: EXPECTED DENIAL — read-only token cannot comment
+        id: denied
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        continue-on-error: true
+        uses: ./a11ygate-action
+        with:
+          current: consumer/reports/a11y-coverage/existing-debt.input.json
+          baseline: trusted/a11y-baseline.json
+          threshold: minor
+          json: consumer/reports/a11y-coverage/permission-denied.json
+          markdown: consumer/reports/a11y-coverage/permission-denied.md
+          qe-result: consumer/reports/a11y-coverage/permission-denied.qe.json
+          summary: 'false'
+          target-label: QE Dogfood SYNTHETIC permission proof
+          comment: 'true'
+      - name: Verify delivery failed without rewriting the native gate
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        env:
+          COMMENT_STATUS: ${{ steps.denied.outputs.comment-status }}
+          NATIVE_EXIT: ${{ steps.denied.outputs.exit-code }}
+          NATIVE_VERDICT: ${{ steps.denied.outputs.verdict }}
+          OUTCOME: ${{ steps.denied.outcome }}
+        run: node -e "if(process.env.COMMENT_STATUS!=='error'||process.env.NATIVE_EXIT!=='0'||process.env.NATIVE_VERDICT!=='PASS'||process.env.OUTCOME!=='failure')throw Error('Expected read-only comment denial with retained native PASS/debt')"
+      - name: Retain raw hypothetical inputs, reports and exact acceptance proposal
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: a11ygate-SYNTHETIC-coverage-proof
+          path: consumer/reports/a11y-coverage/
+          if-no-files-found: error
+          retention-days: 14
+  comment:
+    name: Same-repository comment with least privilege
+    needs: cases
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: trusted
+          persist-credentials: false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          repository: DaveEliranAssistant/a11ygate-action
+          ref: 73e911d1b19ba4aeb52be94fa37de6c668225cf3
+          path: a11ygate-action
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: a11ygate-SYNTHETIC-coverage-proof
+          path: proof
+      - run: mkdir comment-reports
+      - name: Actual same-repository native report and idempotent own-bot comment
+        id: report
+        uses: ./a11ygate-action
+        with:
+          current: proof/existing-debt.input.json
+          baseline: trusted/a11y-baseline.json
+          threshold: minor
+          json: comment-reports/native.json
+          markdown: comment-reports/native.md
+          qe-result: comment-reports/qe-result.json
+          target-label: QE Dogfood SYNTHETIC coverage
+          comment: 'true'
+      - name: Assert delivery and visible accepted debt
+        env:
+          COMMENT_STATUS: ${{ steps.report.outputs.comment-status }}
+        run: node -e "const fs=require('fs');const r=JSON.parse(fs.readFileSync('comment-reports/native.json'));if(process.env.COMMENT_STATUS!=='posted'||r.verdict!=='PASS'||r.counts.stillOpen!==3||!r.coverage.unassessedScope.length)throw Error('Comment/debt proof failed')"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: a11ygate-same-repo-comment-proof
+          path: comment-reports/
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,124 @@
+{
+  "syntheticOnly": true,
+  "description": "Independent hypothetical mutations of frozen qe-dogfood scan evidence; not fresh scans or customer outcomes. Values: native verdict, new, fixed, stillOpen, unassessed, process exit.",
+  "cases": {
+    "existing-debt": [
+      "PASS",
+      0,
+      0,
+      3,
+      0,
+      0
+    ],
+    "missing-page": [
+      "INCOMPLETE",
+      0,
+      0,
+      0,
+      3,
+      2
+    ],
+    "failed-scan": [
+      "INCOMPLETE",
+      0,
+      0,
+      0,
+      3,
+      2
+    ],
+    "changed-config": [
+      "INCOMPLETE",
+      0,
+      0,
+      0,
+      3,
+      2
+    ],
+    "selector-change": [
+      "FAIL",
+      1,
+      0,
+      2,
+      1,
+      1
+    ],
+    "observed-removal": [
+      "PASS",
+      0,
+      1,
+      2,
+      0,
+      0
+    ],
+    "added-finding": [
+      "FAIL",
+      1,
+      0,
+      3,
+      0,
+      1
+    ],
+    "manual-assertion": [
+      "FAIL",
+      1,
+      0,
+      3,
+      0,
+      1
+    ],
+    "malformed": [
+      "ERROR",
+      null,
+      null,
+      null,
+      null,
+      2
+    ],
+    "error-without-failed-status": [
+      "ERROR",
+      null,
+      null,
+      null,
+      null,
+      2
+    ],
+    "contradictory-complete": [
+      "ERROR",
+      null,
+      null,
+      null,
+      null,
+      2
+    ],
+    "regression-with-coverage-loss": [
+      "FAIL",
+      1,
+      0,
+      0,
+      3,
+      1
+    ]
+  },
+  "baselineAcceptance": [
+    {
+      "fingerprint": "button-name|#unlabelled-button|/accessibility",
+      "ruleId": "button-name",
+      "selector": "#unlabelled-button"
+    },
+    {
+      "fingerprint": "color-contrast|.low-contrast|/accessibility",
+      "ruleId": "color-contrast",
+      "selector": ".low-contrast"
+    },
+    {
+      "fingerprint": "image-alt|#missing-alt|/accessibility",
+      "ruleId": "image-alt",
+      "selector": "#missing-alt"
+    },
+    {
+      "fingerprint": "label|#synthetic-input|/accessibility",
+      "ruleId": "label",
+      "selector": "#synthetic-input"
+    }
+  ]
+}
