@@ -1,0 +1,816 @@
+{
+  "product": "flakelens",
+  "version": 2,
+  "generatedLocally": true,
+  "note": "Analyzed locally by the FlakeLens CLI with the shared browser parser/scorer. Source files were not uploaded.",
+  "summary": {
+    "runs": 4,
+    "tests": 8,
+    "flaky": 1,
+    "regressions": 1,
+    "stable": 1,
+    "insufficientEvidence": 5,
+    "failures": 9,
+    "heuristicClusters": 4,
+    "summary": "9 failed attempts · 4 heuristic message clusters (not confirmed root causes)",
+    "flakyFailures": 1
+  },
+  "cost": null,
+  "quarantine": [],
+  "actionsApplied": [],
+  "reviewCandidates": [
+    "triage > regression",
+    "triage > cross-commit",
+    "triage > missing",
+    "triage > never-green",
+    "triage > single",
+    "triage > skip-only",
+    "triage > recovery"
+  ],
+  "runs": [
+    {
+      "sourceName": "run-1.xml",
+      "order": 0,
+      "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "commitSource": "file",
+      "runId": "synthetic-1",
+      "timestamp": "2026-01-01T00:00:00Z",
+      "attemptCount": 7,
+      "failureCount": 2
+    },
+    {
+      "sourceName": "run-2.xml",
+      "order": 1,
+      "commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "commitSource": "file",
+      "runId": "synthetic-2",
+      "timestamp": "2026-01-02T00:00:00Z",
+      "attemptCount": 6,
+      "failureCount": 3
+    },
+    {
+      "sourceName": "run-3.xml",
+      "order": 2,
+      "commit": "cccccccccccccccccccccccccccccccccccccccc",
+      "commitSource": "file",
+      "runId": "synthetic-3",
+      "timestamp": "2026-01-03T00:00:00Z",
+      "attemptCount": 7,
+      "failureCount": 3
+    },
+    {
+      "sourceName": "missing-metadata.xml",
+      "order": 3,
+      "commit": "order-3",
+      "commitSource": "order",
+      "runId": "file-3",
+      "timestamp": null,
+      "attemptCount": 1,
+      "failureCount": 1
+    }
+  ],
+  "tests": [
+    {
+      "testId": "triage > regression",
+      "classname": "triage",
+      "name": "regression",
+      "verdict": "regression",
+      "flakinessScore": 0,
+      "flipRate": 0,
+      "flipEvents": 0,
+      "impact": 0,
+      "executions": 3,
+      "failures": 2,
+      "passes": 1,
+      "sameCommitFlips": 0,
+      "passedOnRetry": 0,
+      "crossRunOscillations": 1,
+      "introducedCommit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "history": [
+        {
+          "runId": "synthetic-1",
+          "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "timestamp": "2026-01-01T00:00:00Z",
+          "sourceName": "run-1.xml",
+          "chronology": 0,
+          "finalStatus": "pass",
+          "attemptStatuses": [
+            "pass"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-2",
+          "commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "timestamp": "2026-01-02T00:00:00Z",
+          "sourceName": "run-2.xml",
+          "chronology": 1,
+          "finalStatus": "fail",
+          "attemptStatuses": [
+            "fail"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-3",
+          "commit": "cccccccccccccccccccccccccccccccccccccccc",
+          "timestamp": "2026-01-03T00:00:00Z",
+          "sourceName": "run-3.xml",
+          "chronology": 2,
+          "finalStatus": "fail",
+          "attemptStatuses": [
+            "fail"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        }
+      ],
+      "evidence": {
+        "policy": "flakelens.evidence/1",
+        "heuristic": true,
+        "reasonCodes": [
+          "persistent-failure-after-pass"
+        ],
+        "explanation": "2 independent timestamp-ordered failing runs after a passing observation; first observed failing commit bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb. This is a regression pattern, not proof of causal commit.",
+        "runCount": 3,
+        "missingCommitRuns": 0,
+        "missingRunIdRuns": 0,
+        "inferredRetryAttempts": 0,
+        "chronology": "timestamp",
+        "warnings": [
+          "Commit/run metadata is caller supplied; branch, ancestry, environment and test identity are not verified."
+        ],
+        "action": "Investigate the persistent failure and compare the observed boundary; retain the original CI failure."
+      }
+    },
+    {
+      "testId": "triage > cross-commit",
+      "classname": "triage",
+      "name": "cross-commit",
+      "verdict": "insufficient-evidence",
+      "flakinessScore": 0,
+      "flipRate": 0,
+      "flipEvents": 0,
+      "impact": 0,
+      "executions": 3,
+      "failures": 1,
+      "passes": 2,
+      "sameCommitFlips": 0,
+      "passedOnRetry": 0,
+      "crossRunOscillations": 2,
+      "introducedCommit": null,
+      "history": [
+        {
+          "runId": "synthetic-1",
+          "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "timestamp": "2026-01-01T00:00:00Z",
+          "sourceName": "run-1.xml",
+          "chronology": 0,
+          "finalStatus": "pass",
+          "attemptStatuses": [
+            "pass"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-2",
+          "commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "timestamp": "2026-01-02T00:00:00Z",
+          "sourceName": "run-2.xml",
+          "chronology": 1,
+          "finalStatus": "fail",
+          "attemptStatuses": [
+            "fail"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-3",
+          "commit": "cccccccccccccccccccccccccccccccccccccccc",
+          "timestamp": "2026-01-03T00:00:00Z",
+          "sourceName": "run-3.xml",
+          "chronology": 2,
+          "finalStatus": "pass",
+          "attemptStatuses": [
+            "pass"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        }
+      ],
+      "evidence": {
+        "policy": "flakelens.evidence/1",
+        "heuristic": true,
+        "reasonCodes": [
+          "cross-commit-only"
+        ],
+        "explanation": "3 observed run(s), 2 passing and 1 failing attempt(s). No confirmed retry/same-commit variation or qualified persistent regression boundary; abstaining.",
+        "runCount": 3,
+        "missingCommitRuns": 0,
+        "missingRunIdRuns": 0,
+        "inferredRetryAttempts": 0,
+        "chronology": "timestamp",
+        "warnings": [
+          "Commit/run metadata is caller supplied; branch, ancestry, environment and test identity are not verified."
+        ],
+        "action": "Investigate the current failure; collect independent runs, explicit retries, commit/run IDs and timestamps. Do not suppress the failure."
+      }
+    },
+    {
+      "testId": "triage > missing",
+      "classname": "triage",
+      "name": "missing",
+      "verdict": "insufficient-evidence",
+      "flakinessScore": 0,
+      "flipRate": 0,
+      "flipEvents": 0,
+      "impact": 0,
+      "executions": 1,
+      "failures": 1,
+      "passes": 0,
+      "sameCommitFlips": 0,
+      "passedOnRetry": 0,
+      "crossRunOscillations": 0,
+      "introducedCommit": null,
+      "history": [
+        {
+          "runId": "file-3",
+          "commit": "order-3",
+          "timestamp": null,
+          "sourceName": "missing-metadata.xml",
+          "chronology": 3,
+          "finalStatus": "fail",
+          "attemptStatuses": [
+            "fail"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "order",
+          "runIdSource": "order"
+        }
+      ],
+      "evidence": {
+        "policy": "flakelens.evidence/1",
+        "heuristic": true,
+        "reasonCodes": [
+          "single-failure",
+          "missing-commit-metadata",
+          "missing-run-metadata",
+          "unverified-history-order"
+        ],
+        "explanation": "1 observed run(s), 0 passing and 1 failing attempt(s). No confirmed retry/same-commit variation or qualified persistent regression boundary; abstaining.",
+        "runCount": 1,
+        "missingCommitRuns": 1,
+        "missingRunIdRuns": 1,
+        "inferredRetryAttempts": 0,
+        "chronology": "file-order",
+        "warnings": [
+          "Commit/run metadata is caller supplied; branch, ancestry, environment and test identity are not verified.",
+          "1 run(s) have no commit metadata; order labels are not commits.",
+          "1 run(s) have no run identity; generated labels are not independent CI runs.",
+          "Whole-history strict timestamp chronology is unavailable. Regression qualification requires its own ordered candidate window; file order alone is never proof."
+        ],
+        "action": "Investigate the current failure; collect independent runs, explicit retries, commit/run IDs and timestamps. Do not suppress the failure."
+      }
+    },
+    {
+      "testId": "triage > never-green",
+      "classname": "triage",
+      "name": "never-green",
+      "verdict": "insufficient-evidence",
+      "flakinessScore": 0,
+      "flipRate": 0,
+      "flipEvents": 0,
+      "impact": 0,
+      "executions": 3,
+      "failures": 3,
+      "passes": 0,
+      "sameCommitFlips": 0,
+      "passedOnRetry": 0,
+      "crossRunOscillations": 0,
+      "introducedCommit": null,
+      "history": [
+        {
+          "runId": "synthetic-1",
+          "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "timestamp": "2026-01-01T00:00:00Z",
+          "sourceName": "run-1.xml",
+          "chronology": 0,
+          "finalStatus": "fail",
+          "attemptStatuses": [
+            "fail"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-2",
+          "commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "timestamp": "2026-01-02T00:00:00Z",
+          "sourceName": "run-2.xml",
+          "chronology": 1,
+          "finalStatus": "fail",
+          "attemptStatuses": [
+            "fail"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-3",
+          "commit": "cccccccccccccccccccccccccccccccccccccccc",
+          "timestamp": "2026-01-03T00:00:00Z",
+          "sourceName": "run-3.xml",
+          "chronology": 2,
+          "finalStatus": "fail",
+          "attemptStatuses": [
+            "fail"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        }
+      ],
+      "evidence": {
+        "policy": "flakelens.evidence/1",
+        "heuristic": true,
+        "reasonCodes": [
+          "no-passing-baseline"
+        ],
+        "explanation": "3 observed run(s), 0 passing and 3 failing attempt(s). No confirmed retry/same-commit variation or qualified persistent regression boundary; abstaining.",
+        "runCount": 3,
+        "missingCommitRuns": 0,
+        "missingRunIdRuns": 0,
+        "inferredRetryAttempts": 0,
+        "chronology": "timestamp",
+        "warnings": [
+          "Commit/run metadata is caller supplied; branch, ancestry, environment and test identity are not verified."
+        ],
+        "action": "Investigate the current failure; collect independent runs, explicit retries, commit/run IDs and timestamps. Do not suppress the failure."
+      }
+    },
+    {
+      "testId": "triage > single",
+      "classname": "triage",
+      "name": "single",
+      "verdict": "insufficient-evidence",
+      "flakinessScore": 0,
+      "flipRate": 0,
+      "flipEvents": 0,
+      "impact": 0,
+      "executions": 1,
+      "failures": 1,
+      "passes": 0,
+      "sameCommitFlips": 0,
+      "passedOnRetry": 0,
+      "crossRunOscillations": 0,
+      "introducedCommit": null,
+      "history": [
+        {
+          "runId": "synthetic-3",
+          "commit": "cccccccccccccccccccccccccccccccccccccccc",
+          "timestamp": "2026-01-03T00:00:00Z",
+          "sourceName": "run-3.xml",
+          "chronology": 2,
+          "finalStatus": "fail",
+          "attemptStatuses": [
+            "fail"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        }
+      ],
+      "evidence": {
+        "policy": "flakelens.evidence/1",
+        "heuristic": true,
+        "reasonCodes": [
+          "single-failure"
+        ],
+        "explanation": "1 observed run(s), 0 passing and 1 failing attempt(s). No confirmed retry/same-commit variation or qualified persistent regression boundary; abstaining.",
+        "runCount": 1,
+        "missingCommitRuns": 0,
+        "missingRunIdRuns": 0,
+        "inferredRetryAttempts": 0,
+        "chronology": "timestamp",
+        "warnings": [
+          "Commit/run metadata is caller supplied; branch, ancestry, environment and test identity are not verified."
+        ],
+        "action": "Investigate the current failure; collect independent runs, explicit retries, commit/run IDs and timestamps. Do not suppress the failure."
+      }
+    },
+    {
+      "testId": "triage > skip-only",
+      "classname": "triage",
+      "name": "skip-only",
+      "verdict": "insufficient-evidence",
+      "flakinessScore": 0,
+      "flipRate": 0,
+      "flipEvents": 0,
+      "impact": 0,
+      "executions": 0,
+      "failures": 0,
+      "passes": 0,
+      "sameCommitFlips": 0,
+      "passedOnRetry": 0,
+      "crossRunOscillations": 0,
+      "introducedCommit": null,
+      "history": [
+        {
+          "runId": "synthetic-1",
+          "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "timestamp": "2026-01-01T00:00:00Z",
+          "sourceName": "run-1.xml",
+          "chronology": 0,
+          "finalStatus": "skip",
+          "attemptStatuses": [
+            "skip"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-2",
+          "commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "timestamp": "2026-01-02T00:00:00Z",
+          "sourceName": "run-2.xml",
+          "chronology": 1,
+          "finalStatus": "skip",
+          "attemptStatuses": [
+            "skip"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-3",
+          "commit": "cccccccccccccccccccccccccccccccccccccccc",
+          "timestamp": "2026-01-03T00:00:00Z",
+          "sourceName": "run-3.xml",
+          "chronology": 2,
+          "finalStatus": "skip",
+          "attemptStatuses": [
+            "skip"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        }
+      ],
+      "evidence": {
+        "policy": "flakelens.evidence/1",
+        "heuristic": true,
+        "reasonCodes": [
+          "no-executed-attempts"
+        ],
+        "explanation": "3 observed run(s), 0 passing and 0 failing attempt(s). No confirmed retry/same-commit variation or qualified persistent regression boundary; abstaining.",
+        "runCount": 3,
+        "missingCommitRuns": 0,
+        "missingRunIdRuns": 0,
+        "inferredRetryAttempts": 0,
+        "chronology": "timestamp",
+        "warnings": [
+          "Commit/run metadata is caller supplied; branch, ancestry, environment and test identity are not verified."
+        ],
+        "action": "Investigate the current failure; collect independent runs, explicit retries, commit/run IDs and timestamps. Do not suppress the failure."
+      }
+    },
+    {
+      "testId": "triage > recovery",
+      "classname": "triage",
+      "name": "recovery",
+      "verdict": "flaky",
+      "flakinessScore": 0.6666666666666666,
+      "flipRate": 0.5,
+      "flipEvents": 2,
+      "impact": 2,
+      "executions": 4,
+      "failures": 1,
+      "passes": 3,
+      "sameCommitFlips": 1,
+      "passedOnRetry": 1,
+      "crossRunOscillations": 0,
+      "introducedCommit": null,
+      "history": [
+        {
+          "runId": "synthetic-1",
+          "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "timestamp": "2026-01-01T00:00:00Z",
+          "sourceName": "run-1.xml",
+          "chronology": 0,
+          "finalStatus": "pass",
+          "attemptStatuses": [
+            "fail",
+            "pass"
+          ],
+          "passedOnRetry": true,
+          "retryIndexes": [
+            0,
+            1
+          ],
+          "retrySources": [
+            "property",
+            "property"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-2",
+          "commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "timestamp": "2026-01-02T00:00:00Z",
+          "sourceName": "run-2.xml",
+          "chronology": 1,
+          "finalStatus": "pass",
+          "attemptStatuses": [
+            "pass"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-3",
+          "commit": "cccccccccccccccccccccccccccccccccccccccc",
+          "timestamp": "2026-01-03T00:00:00Z",
+          "sourceName": "run-3.xml",
+          "chronology": 2,
+          "finalStatus": "pass",
+          "attemptStatuses": [
+            "pass"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        }
+      ],
+      "evidence": {
+        "policy": "flakelens.evidence/1",
+        "heuristic": true,
+        "reasonCodes": [
+          "retry-recovery",
+          "same-commit-outcomes"
+        ],
+        "explanation": "1 explicit retry recovery run(s), 1 provided commit(s) with both pass and fail attempts. Outcomes vary; the failure is not harmless.",
+        "runCount": 3,
+        "missingCommitRuns": 0,
+        "missingRunIdRuns": 0,
+        "inferredRetryAttempts": 0,
+        "chronology": "timestamp",
+        "warnings": [
+          "Commit/run metadata is caller supplied; branch, ancestry, environment and test identity are not verified."
+        ],
+        "action": "Investigate the differing outcomes and retry logs; do not ignore, quarantine, or turn CI green automatically."
+      }
+    },
+    {
+      "testId": "triage > clean",
+      "classname": "triage",
+      "name": "clean",
+      "verdict": "stable",
+      "flakinessScore": 0,
+      "flipRate": 0,
+      "flipEvents": 0,
+      "impact": 0,
+      "executions": 3,
+      "failures": 0,
+      "passes": 3,
+      "sameCommitFlips": 0,
+      "passedOnRetry": 0,
+      "crossRunOscillations": 0,
+      "introducedCommit": null,
+      "history": [
+        {
+          "runId": "synthetic-1",
+          "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "timestamp": "2026-01-01T00:00:00Z",
+          "sourceName": "run-1.xml",
+          "chronology": 0,
+          "finalStatus": "pass",
+          "attemptStatuses": [
+            "pass"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-2",
+          "commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "timestamp": "2026-01-02T00:00:00Z",
+          "sourceName": "run-2.xml",
+          "chronology": 1,
+          "finalStatus": "pass",
+          "attemptStatuses": [
+            "pass"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        },
+        {
+          "runId": "synthetic-3",
+          "commit": "cccccccccccccccccccccccccccccccccccccccc",
+          "timestamp": "2026-01-03T00:00:00Z",
+          "sourceName": "run-3.xml",
+          "chronology": 2,
+          "finalStatus": "pass",
+          "attemptStatuses": [
+            "pass"
+          ],
+          "passedOnRetry": false,
+          "retryIndexes": [
+            0
+          ],
+          "retrySources": [
+            "sequence"
+          ],
+          "commitSource": "file",
+          "runIdSource": "file"
+        }
+      ],
+      "evidence": {
+        "policy": "flakelens.evidence/1",
+        "heuristic": true,
+        "reasonCodes": [
+          "no-failures-observed"
+        ],
+        "explanation": "3 passing attempt(s), no failures observed. This does not establish future stability.",
+        "runCount": 3,
+        "missingCommitRuns": 0,
+        "missingRunIdRuns": 0,
+        "inferredRetryAttempts": 0,
+        "chronology": "timestamp",
+        "warnings": [
+          "Commit/run metadata is caller supplied; branch, ancestry, environment and test identity are not verified."
+        ],
+        "action": "No observed failure in this sample; retain normal CI gates."
+      }
+    }
+  ],
+  "clusters": [
+    {
+      "signature": "synthetic_only failure synthetic diagnostic; not customer data.",
+      "label": "SYNTHETIC_ONLY failure",
+      "count": 6,
+      "testIds": [
+        "triage > cross-commit",
+        "triage > never-green",
+        "triage > regression"
+      ],
+      "kind": "heuristic-message-similarity",
+      "confirmedRootCause": false
+    },
+    {
+      "signature": "synthetic_only missing metadata",
+      "label": "SYNTHETIC_ONLY missing metadata",
+      "count": 1,
+      "testIds": [
+        "triage > missing"
+      ],
+      "kind": "heuristic-message-similarity",
+      "confirmedRootCause": false
+    },
+    {
+      "signature": "synthetic_only retry",
+      "label": "SYNTHETIC_ONLY retry",
+      "count": 1,
+      "testIds": [
+        "triage > recovery"
+      ],
+      "kind": "heuristic-message-similarity",
+      "confirmedRootCause": false
+    },
+    {
+      "signature": "synthetic_only single failure",
+      "label": "SYNTHETIC_ONLY single failure",
+      "count": 1,
+      "testIds": [
+        "triage > single"
+      ],
+      "kind": "heuristic-message-similarity",
+      "confirmedRootCause": false
+    }
+  ]
+}

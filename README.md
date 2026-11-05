@@ -61,3 +61,7 @@ Only the owner-approved bounded SpecGate OpenAPI adapter is vendored under `vend
 ## License
 
 MIT; see [LICENSE](LICENSE). Product code consumed by Actions remains subject to its own license and provenance notices. Existing product repositories are changed only via PRs, never direct main pushes. No Hermes publisher or configuration is touched.
+
+## Synthetic evidence-triage increment (in review)
+
+A separate [FlakeLens evidence-triage fixture and CI quickstart](docs/FLAKELENS_TRIAGE.md) exercises insufficient evidence, explicit retry recovery, persistent regression, missing metadata and skipped-only cases using a pinned revision of the existing public CLI. It retains native/shared FAIL for the deliberately seeded regression while asserting the declared synthetic oracle. This is not customer data, a clean application gate or an automatic quarantine policy. Existing A/B intent, frozen baselines and the original QE workflow stay unchanged.
