@@ -5,7 +5,6 @@ app.disable('x-powered-by');
 app.use(express.json({limit:'16kb'}));
 const items=new Map<string,{id:string;name:string}>([['demo',{id:'demo',name:'Notebook'}]]);
 let sequence=0;
-app.get('/api/health',(_req,res)=>{res.json({ok:true});});
 app.get('/api/items',(_req,res)=>{res.json([...items.values()]);});
 app.post('/api/items',(req,res)=>{if(typeof req.body?.name!=='string'||!req.body.name.trim()||req.body.name.length>100){res.status(400).json({error:'name must be a non-empty string of at most 100 characters'});return;}const item={id:String(++sequence),name:req.body.name};items.set(item.id,item);res.status(201).json(item);});
 app.get('/api/items/:id',(req,res)=>{const item=items.get(req.params.id);if(!item){res.status(404).json({error:'not found'});return;}res.json(item);});
