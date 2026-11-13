@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Northline Goods — demo shop</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="skip" href="#main">Skip to content</a>
+      <a class="brand" href="#main">Northline Goods</a>
+      <nav class="primary-nav" aria-label="Primary">
+        <a href="#shop">Shop</a>
+        <a href="#workshop">The workshop</a>
+        <a href="#ask">Ask us</a>
+      </nav>
+      <button type="button" class="cart">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22">
+          <path fill="none" stroke="currentColor" stroke-width="2" d="M6 7h15l-1.5 9h-12L5 4H2"></path>
+          <circle cx="9" cy="20" r="1.4" fill="currentColor"></circle>
+          <circle cx="18" cy="20" r="1.4" fill="currentColor"></circle>
+        </svg>
+        <span>Cart, 0 items</span>
+      </button>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">A small kiln and a short list</p>
+          <h1 id="hero-title">Goods for a quieter kitchen</h1>
+          <p>Three pieces made in small batches: a mug, a wool throw for the bench, and cedar soap for the sink. This page is a synthetic shop used to demonstrate an automated accessibility check.</p>
+          <a class="button" href="#shop">Shop the three pieces</a>
+        </div>
+        <img src="images/hero.svg" width="640" height="480" alt="Stoneware mug, folded wool throw, and a bar of cedar soap on a linen cloth">
+      </section>
+
+      <section id="shop" class="band" aria-labelledby="shop-title">
+        <h2 id="shop-title">The three pieces</h2>
+        <div class="product-grid">
+          <article class="product" id="mug" aria-labelledby="mug-title">
+            <img src="images/mug.svg" width="480" height="360" alt="Speckled stoneware mug with a pulled handle">
+            <h3 id="mug-title">Speckled mug</h3>
+            <p class="price">€36</p>
+            <p>Holds 300 ml. The glaze is matte and the foot is unglazed.</p>
+            <button type="button">Add speckled mug to bag</button>
+          </article>
+          <article class="product" id="throw" aria-labelledby="throw-title">
+            <img src="images/throw.svg" width="480" height="360" alt="Folded charcoal wool throw with a rust edge">
+            <h3 id="throw-title">Wool throw</h3>
+            <p class="price">€98</p>
+            <p>Woven wool, about 130 by 180 cm, for the bench beside the stove.</p>
+            <button type="button">Add wool throw to bag</button>
+          </article>
+          <article class="product" id="soap" aria-labelledby="soap-title">
+            <img src="images/soap.svg" width="480" height="360" alt="Rectangular cedar soap bar with a scored top">
+            <h3 id="soap-title">Cedar soap</h3>
+            <p class="price">€12</p>
+            <p>A plain bar for the kitchen sink. No added colour.</p>
+            <button type="button">Add cedar soap to bag</button>
+          </article>
+        </div>
+      </section>
+
+      <section id="workshop" class="band workshop" aria-labelledby="workshop-title">
+        <h2 id="workshop-title">The workshop</h2>
+        <img src="images/workshop.svg" width="640" height="400" alt="A workbench with a lump of clay, a wooden rib, and a drying board">
+        <p>Northline is not a store you can buy from. The pictures, prices, and form are fixtures so a pull request can show an accessibility regression and the fix that follows it.</p>
+        <p><a href="#ask">Ask about a piece</a> if you want to see the labelled form.</p>
+      </section>
+
+      <section id="ask" class="band" aria-labelledby="ask-title">
+        <h2 id="ask-title">Ask about a piece</h2>
+        <form class="ask" action="#ask" method="get">
+          <div class="field">
+            <label for="name">Name (required)</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="email">Email (required)</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="note">What are you looking for? (required)</label>
+            <textarea id="note" name="note" rows="4" required></textarea>
+          </div>
+          <button type="submit">Send message</button>
+        </form>
+      </section>
+
+      <section id="shipping" class="band split" aria-labelledby="shipping-title">
+        <div>
+          <h2 id="shipping-title">Shipping</h2>
+          <p>Nothing is shipped. The button and the form stay on this page so the scan always sees the same controls.</p>
+        </div>
+        <div id="returns">
+          <h2 id="returns-title">Returns</h2>
+          <p>There is no order to return. The link is here so the footer has a real destination.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <nav aria-label="Footer">
+        <a href="#shipping">Shipping</a>
+        <a href="#returns">Returns</a>
+        <a href="#ask">Contact</a>
+      </nav>
+      <p>Synthetic demo shop for an automated axe check. A passing check is not a WCAG or European Accessibility Act conformance claim.</p>
+    </footer>
+  </body>
+</html>
