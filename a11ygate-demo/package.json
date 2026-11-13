@@ -1,0 +1,14 @@
+{
+  "name": "a11ygate-demo-shop",
+  "private": true,
+  "description": "Synthetic static shop scanned by A11yGate. Not a conformance claim.",
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs",
+    "scan": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1"
+  }
+}
