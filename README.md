@@ -2,6 +2,12 @@
 
 A tiny **public MIT** Node/TypeScript app exercising **FlakeLens, A11yGate and SpecGate** in one GitHub Actions workflow. This is intentionally synthetic, not a production service or a claim of full product coverage.
 
+## A11yGate demo
+
+`a11ygate-demo/` is a static shop page with a form, images, buttons and links. Pull requests that change it run [`DaveEliranAssistant/a11ygate/action@main`](https://github.com/DaveEliranAssistant/a11ygate/tree/main/action). The accepted page has no axe findings, so every finding is new. The action posts one pull request comment and fails on new serious or critical findings.
+
+[Pull request 12](https://github.com/DaveEliranAssistant/qe-dogfood/pull/12) adds a sale banner with four findings, then repairs them. The shop check goes from [fail](https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/43420669159) (4 new) to [pass](https://github.com/DaveEliranAssistant/qe-dogfood/actions/runs/43421140716) (0 new). The comment is updated in place: [A11yGate comment](https://github.com/DaveEliranAssistant/qe-dogfood/pull/12#issuecomment-6852088463). A passing result is an automated regression result for that page, not a WCAG or European Accessibility Act conformance claim.
+
 ## Open the evidence
 
 Open **Actions → QE product dogfood → a PR run**, then the **Product reports** job summary. Download `qe-raw-evidence` and `qe-product-reports` for the inputs and machine-readable output. A11yGate also posts/updates a PR comment for same-repository PRs.
